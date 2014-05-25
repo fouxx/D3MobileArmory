@@ -1,0 +1,44 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+		<item name="android:popupMenuStyle">@style/popupMenuStyle</item>
+		<item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+        <item name="android:dropDownListViewStyle">@style/MyListViewStyle</item>
+		
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    
+    <style name="MyListViewStyle" parent="@android:style/Widget.ListView">
+        <item name="android:divider">#363229</item>
+        <item name="android:dividerHeight">3dp</item>
+	</style>
+    
+    <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.TextView.PopupMenu">
+    	<item name="android:textColor">#a59585</item>
+	</style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+		<item name="android:popupMenuStyle">@style/popupMenuStyle</item>
+		<item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+        <item name="android:dropDownListViewStyle">@style/MyListViewStyle</item>
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="customDialog" parent="android:Theme.Dialog"> 
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+    </style> 
+    
+    <style name="popupMenuStyle" parent="@android:style/Widget.PopupMenu">
+		<item name="android:popupBackground">@drawable/popup_background</item>
+	</style>
+	
+</resources>

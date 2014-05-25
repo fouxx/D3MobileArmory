@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp" >
+    
+     <LinearLayout
+   		android:orientation="horizontal"
+	    android:layout_marginBottom="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+        
+        <EditText
+	        android:id="@+id/btag"
+	        android:inputType="text"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.5"
+	        
+            android:background="@drawable/edittext"
+            android:textColor="#ffffff"
+            android:textSize="24sp" >
+	
+	        <requestFocus />
+	    </EditText>
+	    
+        <TextView
+            android:id="@+id/hash"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center_horizontal"
+            android:text="@string/hash"
+            android:textSize="24sp" />
+        
+        <EditText
+            android:id="@+id/number"
+            android:inputType="number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            
+            android:background="@drawable/edittext"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            android:maxLength="4" >
+	
+	    </EditText>
+        
+    </LinearLayout>
+
+		<Button
+		    android:id="@+id/buttonAdd"
+		    android:background="@drawable/buttonstyle"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+            android:textSize="22sp"
+       		android:textColor="#eaaa6d"
+		    android:text="@string/add" />
+		
+		<Button
+		    android:id="@+id/buttonCancel"
+		    android:background="@drawable/buttonstyle"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textColor="#eaaa6d"
+        	android:onClick="onCancelClick"
+		    android:text="@string/cancel" />
+
+</LinearLayout>
