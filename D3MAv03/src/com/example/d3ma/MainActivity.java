@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.example.d3ma.Player;
 import com.example.d3ma.MySQLiteHelper;
 import com.example.d3ma.HeroListActivity;
+import com.example.d3ma.ProfileDownloader;
 
 import android.support.v7.app.ActionBarActivity;
 import android.widget.PopupMenu;
@@ -42,7 +43,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 	
 	Button addNewPlayer, add, cancel;
 	Typeface font;
@@ -186,13 +187,15 @@ public class MainActivity extends ActionBarActivity {
 				String url_career = "http://eu.battle.net/d3/en/profile/"+profile+"/career";
 				String url = "http://eu.battle.net/d3/en/profile/"+profile+"/";
 				
-				new DownloadProfile().execute(url_career, url);
-				dialog.dismiss();
+				new ProfileDownloader(MainActivity.this, MainActivity.this).execute(url_career, url);
 				
-        		list = db.getAllPlayers();        		
-        		adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
-        		playerList.setAdapter(adapter);
-        		playerList.setTextFilterEnabled(true);
+				System.out.println("dupa");
+				list = db.getAllPlayers();        		
+    			adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
+    			playerList.setAdapter(adapter);
+    			playerList.setTextFilterEnabled(true);
+    			
+				dialog.dismiss();	
 			}
 		});
 		
@@ -216,7 +219,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		t.show();
 	}
-	
+	/*
 	public static boolean urlExists(String url){
         HttpURLConnection huc;
         System.setProperty("http.keepAlive", "false");
@@ -231,7 +234,7 @@ public class MainActivity extends ActionBarActivity {
             return false;
          }
 	}
-	
+	*/
     public static boolean isNetworkStatusAvialable (Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) 
@@ -243,7 +246,7 @@ public class MainActivity extends ActionBarActivity {
         }
         return false;
     }
-	
+	/*
 	private class DownloadProfile extends AsyncTask<String, Void, Void> {
         private final HttpClient Client = new DefaultHttpClient();
         private String Error = null;
@@ -351,5 +354,16 @@ public class MainActivity extends ActionBarActivity {
         		playerList.setTextFilterEnabled(true);
             }
         }
+	}
+	*/
+
+	@Override
+	public void asyncComplete(boolean success) {
+		if(success){
+			list = db.getAllPlayers();        		
+			adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
+			playerList.setAdapter(adapter);
+			playerList.setTextFilterEnabled(true);
+		}
 	}
 }

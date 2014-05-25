@@ -27,16 +27,19 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
     private ProgressDialog Dialog;
     
 	private Context context;
-	Typeface font;
-	String Career, Heroes;
-	MySQLiteHelper database;
+	private Typeface font;
+	private String Career, Heroes;
+	private MySQLiteHelper database;
+	private AsyncDelegate delegate;
 	
-	public ProfileDownloader(Context context){
+	public ProfileDownloader(Context context, AsyncDelegate delegate){
 		this.context = context;
 		this.Dialog  = new ProgressDialog(context);
 		this.Error = null;
 		this.Client = new DefaultHttpClient();
 		this.font = Typeface.createFromAsset(context.getAssets(),"fonts/DiabloLight.ttf");
+		this.database = new MySQLiteHelper(context);
+		this.delegate = delegate;
 	}
     
 	public void customToast(String toast){
@@ -158,6 +161,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
     
     @Override
     protected void onPostExecute(Void unused) {
+        delegate.asyncComplete(true);
         Dialog.dismiss();
         if (Error != null) {
         	customToast(Error);
