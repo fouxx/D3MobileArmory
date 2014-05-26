@@ -3,7 +3,6 @@ package fouxx.D3MobileArmory;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -11,9 +10,8 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import com.example.d3ma.R;
-
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -44,6 +42,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
 		this.delegate = delegate;
 	}
     
+	@SuppressLint("DefaultLocale")
 	public void customToast(String toast){
 		Toast t = Toast.makeText(context, toast, Toast.LENGTH_SHORT);
 		LinearLayout layout = (LinearLayout) t.getView();
