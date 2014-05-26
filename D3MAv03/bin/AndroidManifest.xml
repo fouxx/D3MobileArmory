@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.d3ma.MainActivity"
+            android:name="fouxx.D3MobileArmory.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:screenOrientation="nosensor" >
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.d3ma.HeroListActivity"
+            android:name="fouxx.D3MobileArmory.HeroListActivity"
             android:label="@string/title_activity_hero_list"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="nosensor" >

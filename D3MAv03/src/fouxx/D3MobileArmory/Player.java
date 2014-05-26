@@ -1,4 +1,4 @@
-package com.example.d3ma;
+package fouxx.D3MobileArmory;
 
 import java.io.Serializable;
 

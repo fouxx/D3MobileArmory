@@ -1,9 +1,8 @@
-package com.example.d3ma;
+package fouxx.D3MobileArmory;
 
 import java.util.ArrayList;
 
-import com.example.d3ma.Player;
-
+import fouxx.D3MobileArmory.Player;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

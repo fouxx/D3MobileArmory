@@ -1,23 +1,13 @@
-package com.example.d3ma;
+package fouxx.D3MobileArmory;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.commons.lang3.StringUtils;
+import com.example.d3ma.R;
 
-import com.example.d3ma.Player;
-import com.example.d3ma.MySQLiteHelper;
-import com.example.d3ma.HeroListActivity;
-import com.example.d3ma.ProfileDownloader;
-
+import fouxx.D3MobileArmory.HeroListActivity;
+import fouxx.D3MobileArmory.MySQLiteHelper;
+import fouxx.D3MobileArmory.Player;
+import fouxx.D3MobileArmory.ProfileDownloader;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.PopupMenu;
 import android.view.Gravity;
@@ -34,13 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 public class MainActivity extends ActionBarActivity implements AsyncDelegate {
@@ -219,22 +207,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 		}
 		t.show();
 	}
-	/*
-	public static boolean urlExists(String url){
-        HttpURLConnection huc;
-        System.setProperty("http.keepAlive", "false");
-        try {
-        	huc = (HttpURLConnection) new URL(url).openConnection();
-        	huc.setRequestMethod("HEAD");
-        	huc.setRequestProperty( "Accept-Encoding", "" ); 
 
-            return (huc.getResponseCode() == HttpURLConnection.HTTP_OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-         }
-	}
-	*/
     public static boolean isNetworkStatusAvialable (Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) 
@@ -246,116 +219,6 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
         }
         return false;
     }
-	/*
-	private class DownloadProfile extends AsyncTask<String, Void, Void> {
-        private final HttpClient Client = new DefaultHttpClient();
-        private String Error = null;
-        private ProgressDialog Dialog = new ProgressDialog(MainActivity.this);
-        
-        protected void onPreExecute() {
-            Dialog.setMessage("Downloading source..");
-            Dialog.show();
-        }
-        
-        String getSource(String url){
-        	try {
-                HttpGet httpget = new HttpGet(url);
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String source = Client.execute(httpget, responseHandler);
-                return source;
-            } catch (ClientProtocolException e) {
-                Error = e.getMessage();
-                cancel(true);
-            } catch (IOException e) {
-                Error = e.getMessage();
-                cancel(true);
-            }
-        	
-			return null;
-        }
-        
-        @Override
-        protected Void doInBackground(String... urls) {
-        	String url_career = urls[0];
-        	String url_heroes = urls[1];
-        	if(!urlExists(url_career) || !urlExists(url_heroes)){
-        		Error = "This profile doesn't exist";
-        		return null;
-        	}
-        	
-        	Career = getSource(url_career);
-        	Heroes = getSource(url_heroes);
-        	
-        	String btagLine = StringUtils.substringBetween(Career, "Profile.baseUrl", ";");
-        	String btag = StringUtils.substringBetween(btagLine, "profile/", "/");
-        	String paragonSC = "-", paragonHC = "-";
-        	if(Career.contains("kill-section paragon")){
-	        	String paragon = StringUtils.substringBetween(Career, "kill-section paragon", "clear");
-	        	if(paragon.contains("hardcore")){
-	        		paragonSC = StringUtils.substringBetween(paragon, "num-kills\">", " |");
-	        		paragonHC = StringUtils.substringBetween(paragon, "hardcore\">", "<");
-	        		System.out.println(paragonSC+" "+paragonHC);
-	        	}else{
-	        		paragonSC = StringUtils.substringBetween(paragon, "num-kills\">", "<");
-	        		System.out.println(paragonSC+" "+paragonHC);
-	        	}
-        	}
-        	Player newPlayer = new Player(btag, paragonSC, paragonHC);
-        	db.addPlayer(newPlayer);
-        	
-        	String heroes = StringUtils.substringBetween(Heroes, "Profile.heroes", "]");
-            String heroesIds [] = StringUtils.substringsBetween(heroes, "id: ", ",");
-            String heroesNames [] = StringUtils.substringsBetween(heroes, "name: '", "',");
-            String heroesLevels [] = StringUtils.substringsBetween(heroes, "level: ", ",");
-            String heroesClass [] = StringUtils.substringsBetween(heroes, "'class': '", "',");
-            
-            int noOfHeroes = heroesIds.length;
-            String heroesGender [] = new String[noOfHeroes];
-            String heroesGameMode [] = new String[noOfHeroes];
-            
-            for(int i = 0; i < noOfHeroes; i++){
-            	String info = StringUtils.substringBetween(Heroes, "hero-tab "+heroesClass[i]+"-", "\" href=\""+heroesIds[i]);
-            	if(info.contains("\n")){
-            		info = StringUtils.substringAfterLast(info, "hero-tab "+heroesClass[i]+"-");
-            	}
-            	if(info.contains("-active"))
-            		info = info.replace("-active", "");
-            	if(info.contains(" active"))
-            		info = info.replace(" active", "");
-
-            	if(info.contains("hardcore")){
-            		String[] parts = info.split(" ");
-            		heroesGender[i] = parts[0];
-            		heroesGameMode[i] = parts[1];
-            	}else{
-            		heroesGender[i] = info;
-            		heroesGameMode[i] = "softcore";
-            	}
-            	
-            	Hero newHero = new Hero(heroesIds[i], heroesNames[i], heroesGender[i], heroesLevels[i], heroesClass[i], heroesGameMode[i], "false", btag);
-            	db.addHero(newHero);
-            	          	
-            	System.out.println(info);
-            }
-        	
-			return null;
-        }
-        
-        @Override
-        protected void onPostExecute(Void unused) {
-            Dialog.dismiss();
-            if (Error != null) {
-            	customToast(Error);
-            } else {
-                customToast("Done!");
-        		list = db.getAllPlayers();        		
-        		ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
-        		playerList.setAdapter(adapter);
-        		playerList.setTextFilterEnabled(true);
-            }
-        }
-	}
-	*/
 
 	@Override
 	public void asyncComplete(boolean success) {

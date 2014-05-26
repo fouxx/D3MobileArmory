@@ -1,4 +1,4 @@
-package com.example.d3ma;
+package fouxx.D3MobileArmory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -11,6 +11,8 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.example.d3ma.R;
 
 import android.app.ProgressDialog;
 import android.content.Context;

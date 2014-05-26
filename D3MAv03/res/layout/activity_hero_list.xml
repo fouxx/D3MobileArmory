@@ -5,7 +5,7 @@
     android:layout_centerVertical="true"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context="com.example.d3ma.HeroListActivity"
+    tools:context="fouxx.D3MobileArmory.HeroListActivity"
     tools:ignore="MergeRootFrame" >
     
     <ListView
