@@ -12,7 +12,9 @@ import android.os.Bundle;
 public class HeroListActivity extends ActionBarActivity {
 	
 	ListView heroList;
-	ArrayAdapter<Hero> adapter;
+	//ArrayAdapter<Hero> adapter;
+	
+	ListViewAdapter adapter;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -30,7 +32,9 @@ public class HeroListActivity extends ActionBarActivity {
 			player = (Player) extras.getSerializable("PLAYER");
 			System.out.println(player.toString());
 		}
-		adapter = new ArrayAdapter<Hero>(this, R.layout.custom_textview, list);
+		//adapter = new ArrayAdapter<Hero>(this, R.layout.custom_textview, list);
+		adapter = new ListViewAdapter(this, list);
+        heroList.setAdapter(adapter);
 		
 		heroList.setAdapter(adapter);
 		heroList.setTextFilterEnabled(true);

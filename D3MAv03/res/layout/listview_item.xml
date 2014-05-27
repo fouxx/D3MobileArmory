@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/toast_background" >
+
+    <ImageView
+        android:id="@+id/heroPortrait"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/abc_ab_bottom_transparent_dark_holo" />
+
+    <TextView
+        android:id="@+id/heroName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/heroPortrait"
+        android:layout_toRightOf="@+id/heroPortrait"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="24sp"
+        android:textColor="#a59585"
+        android:text="@string/placeholder_name"/>
+
+    <TextView
+        android:id="@+id/heroClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/heroName"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/heroPortrait"
+        android:textSize="16sp"
+        android:textColor="#a59585"
+        android:text="@string/placeholder_class" />
+
+</RelativeLayout>
