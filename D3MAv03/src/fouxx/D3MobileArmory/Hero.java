@@ -10,6 +10,7 @@ public class Hero implements Serializable{
 	String level;
 	String heroClass;
 	String mode;
+	String paragon;
 	
 	String downloaded;
 	String btag;
@@ -23,7 +24,7 @@ public class Hero implements Serializable{
 	
 	Hero(){}
 	
-	Hero(String ID, String name, String gender, String level, String heroClass, String mode, String downloaded, String btag){
+	Hero(String ID, String name, String gender, String level, String heroClass, String mode, String downloaded, String btag, String paragon){
 		this.ID = ID;
 		this.name = name;
 		this.gender = gender;
@@ -32,6 +33,7 @@ public class Hero implements Serializable{
 		this.mode = mode;
 		this.downloaded = downloaded;
 		this.btag = btag;
+		this.paragon = paragon;
 	}
 	
 	void setDetails(String damage, String toughness, String healing, String a_str, String a_dex, String a_int, String a_vit){

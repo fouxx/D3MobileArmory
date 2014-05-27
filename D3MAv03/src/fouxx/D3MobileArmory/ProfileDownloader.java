@@ -132,6 +132,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
         int noOfHeroes = heroesIds.length;
         String heroesGender [] = new String[noOfHeroes];
         String heroesGameMode [] = new String[noOfHeroes];
+        String paragon [] = new String[noOfHeroes];
         
         for(int i = 0; i < noOfHeroes; i++){
         	String info = StringUtils.substringBetween(Heroes, "hero-tab "+heroesClass[i]+"-", "\" href=\""+heroesIds[i]);
@@ -147,12 +148,15 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
         		String[] parts = info.split(" ");
         		heroesGender[i] = parts[0];
         		heroesGameMode[i] = parts[1];
+        		paragon[i] = newPlayer.paragonHC;
         	}else{
         		heroesGender[i] = info;
         		heroesGameMode[i] = "softcore";
+        		paragon[i] = newPlayer.paragonSC;
         	}
         	
-        	Hero newHero = new Hero(heroesIds[i], heroesNames[i], heroesGender[i], heroesLevels[i], heroesClass[i], heroesGameMode[i], "false", btag);
+        	Hero newHero = new Hero(heroesIds[i], heroesNames[i], heroesGender[i], heroesLevels[i], heroesClass[i], heroesGameMode[i], "false", btag, paragon[i]);
+        	System.out.println(heroesNames[i] + " " + heroesGameMode[i]);
         	database.addHero(newHero);
         	          	
         	System.out.println(info);

@@ -30,7 +30,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         
         String CREATE_HERO_TABLE = "CREATE TABLE heroes ( " + 
         		"ID TEXT, name TEXT, gender TEXT, level TEXT, "+
-        		"heroClass TEXT, mode TEXT, downloaded TEXT, btag TEXT, PRIMARY KEY(ID) )";
+        		"heroClass TEXT, mode TEXT, downloaded TEXT, btag, paragon TEXT, PRIMARY KEY(ID) )";
         db.execSQL(CREATE_HERO_TABLE);
     }
     
@@ -142,8 +142,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     private static final String KEY_HEROCLASS = "heroClass";
     private static final String KEY_MODE = "mode";
     private static final String KEY_DOWNLOADED = "downloaded";
+    private static final String KEY_PARAGON = "paragon";
     
-    private static final String[] HERO_COLUMNS = {KEY_ID, KEY_NAME, KEY_GENDER, KEY_LEVEL, KEY_HEROCLASS, KEY_MODE, KEY_DOWNLOADED, KEY_BTAG};
+    
+    private static final String[] HERO_COLUMNS = {KEY_ID, KEY_NAME, KEY_GENDER, KEY_LEVEL, KEY_HEROCLASS, KEY_MODE, KEY_DOWNLOADED, KEY_BTAG, KEY_PARAGON};
     
     public void addHero(Hero hero){
         Log.d("addHero", hero.toString());
@@ -163,6 +165,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_MODE, hero.mode);
         values.put(KEY_DOWNLOADED, hero.downloaded);
         values.put(KEY_BTAG, hero.btag);
+        values.put(KEY_PARAGON, hero.paragon);
  
         db.insert(TABLE_HEROES, null, values);
     }
@@ -187,6 +190,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
                 hero.mode = cursor.getString(5);
                 hero.downloaded = cursor.getString(6);
                 hero.btag = cursor.getString(7);
+                hero.paragon = cursor.getString(8);
   
                 heroes.add(hero);
             } while (cursor.moveToNext());
