@@ -6,6 +6,7 @@
     android:background="@drawable/color_list" >
 
     <ImageView
+	    android:layout_marginTop="4dp"
         android:id="@+id/heroPortrait"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -20,13 +21,7 @@
         android:layout_alignTop="@+id/heroPortrait"
         android:layout_toRightOf="@+id/heroPortrait"
         android:layout_marginLeft="10dp"
-        
-        android:singleLine="true"
-		android:ellipsize="marquee"
-		android:marqueeRepeatLimit="marquee_forever"
-		android:focusable="false"
-		android:scrollHorizontally="true"
-		
+        android:singleLine="true"		
         android:textSize="24sp"
         android:textColor="#D9B082"
         android:text="@string/placeholder_name"/>

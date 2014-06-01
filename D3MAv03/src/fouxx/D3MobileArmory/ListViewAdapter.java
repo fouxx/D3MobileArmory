@@ -65,7 +65,7 @@ public class ListViewAdapter extends BaseAdapter {
 	  	holder.heroName 		  = (TextView)  v.findViewById(R.id.heroName);
 	  	holder.heroClass 		  = (TextView)  v.findViewById(R.id.heroClass);
 	  	holder.heroLevel		  = (TextView)  v.findViewById(R.id.heroLevel);
-	  	holder.heroParagonLevel = (TextView)  v.findViewById(R.id.heroParagonLevel);
+	  	holder.heroParagonLevel   = (TextView)  v.findViewById(R.id.heroParagonLevel);
 	  	holder.heroMode 		  = (TextView)  v.findViewById(R.id.heroMode);
 	  
 	  	Hero hero = new Hero();
@@ -95,14 +95,10 @@ public class ListViewAdapter extends BaseAdapter {
 
 	  	holder.heroLevel.setText(hero.level);
 	  	holder.heroParagonLevel.setText("("+hero.paragon+")");
-	  	if(hero.paragon.contains("-"))
+	  	if(hero.paragon.equals("0"))
 	  		holder.heroParagonLevel.setText("");
 	  	holder.heroClass.setText(c);
-	  
-	  	if(hero.mode.contains("hardcore"))
-	  		holder.heroMode.setText(StringUtils.capitalize(hero.mode));
-	  	else
-	  		holder.heroMode.setText("");
+	  	holder.heroMode.setText(hero.mode);
 			  
 		return v;
 	}

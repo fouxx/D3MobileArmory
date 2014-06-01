@@ -1,15 +1,18 @@
 package fouxx.D3MobileArmory;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import org.apache.commons.lang3.StringUtils;
+
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.example.d3ma.R;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -28,7 +31,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
     
 	private Context context;
 	private Typeface font;
-	private String Career, Heroes;
+	private String careerString;
 	private MySQLiteHelper database;
 	private AsyncDelegate delegate;
 	
@@ -54,21 +57,6 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
 		  tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 		}
 		t.show();
-	}
-	
-	public static boolean urlExists(String url){
-        HttpURLConnection huc;
-        System.setProperty("http.keepAlive", "false");
-        try {
-        	huc = (HttpURLConnection) new URL(url).openConnection();
-        	huc.setRequestMethod("HEAD");
-        	huc.setRequestProperty( "Accept-Encoding", "" ); 
-
-            return (huc.getResponseCode() == HttpURLConnection.HTTP_OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-         }
 	}
     
     protected void onPreExecute() {
@@ -96,69 +84,55 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... urls) {
     	String url_career = urls[0];
-    	String url_heroes = urls[1];
-    	if(!urlExists(url_career) || !urlExists(url_heroes)){
-    		Error = "This profile doesn't exist";
-    		return null;
-    	}
     	
-    	Career = getSource(url_career);
-    	Heroes = getSource(url_heroes);
+    	careerString = getSource(url_career);
     	
-    	String btagLine = StringUtils.substringBetween(Career, "Profile.baseUrl", ";");
-    	String btag = StringUtils.substringBetween(btagLine, "profile/", "/");
-    	String paragonSC = "-", paragonHC = "-";
-    	if(Career.contains("kill-section paragon")){
-        	String paragon = StringUtils.substringBetween(Career, "kill-section paragon", "clear");
-        	if(paragon.contains("hardcore")){
-        		paragonSC = StringUtils.substringBetween(paragon, "num-kills\">", " |");
-        		paragonHC = StringUtils.substringBetween(paragon, "hardcore\">", "<");
-        		System.out.println(paragonSC+" "+paragonHC);
-        	}else{
-        		paragonSC = StringUtils.substringBetween(paragon, "num-kills\">", "<");
-        		System.out.println(paragonSC+" "+paragonHC);
+    	try {
+            JSONObject career = new JSONObject(careerString);
+        	if(!career.isNull("code") && career.getString("code").equals("NOTFOUND")){
+        		Error = career.getString("reason");
+        		return null;
         	}
-    	}
-    	Player newPlayer = new Player(btag, paragonSC, paragonHC);
-    	database.addPlayer(newPlayer);
-    	
-    	String heroes = StringUtils.substringBetween(Heroes, "Profile.heroes", "]");
-        String heroesIds [] = StringUtils.substringsBetween(heroes, "id: ", ",");
-        String heroesNames [] = StringUtils.substringsBetween(heroes, "name: '", "',");
-        String heroesLevels [] = StringUtils.substringsBetween(heroes, "level: ", ",");
-        String heroesClass [] = StringUtils.substringsBetween(heroes, "'class': '", "',");
-        
-        int noOfHeroes = heroesIds.length;
-        String heroesGender [] = new String[noOfHeroes];
-        String heroesGameMode [] = new String[noOfHeroes];
-        String paragon [] = new String[noOfHeroes];
-        
-        for(int i = 0; i < noOfHeroes; i++){
-        	String info = StringUtils.substringBetween(Heroes, "hero-tab "+heroesClass[i]+"-", "\" href=\""+heroesIds[i]);
-        	if(info.contains("\n")){
-        		info = StringUtils.substringAfterLast(info, "hero-tab "+heroesClass[i]+"-");
-        	}
-        	if(info.contains("-active"))
-        		info = info.replace("-active", "");
-        	if(info.contains(" active"))
-        		info = info.replace(" active", "");
-
-        	if(info.contains("hardcore")){
-        		String[] parts = info.split(" ");
-        		heroesGender[i] = parts[0];
-        		heroesGameMode[i] = parts[1];
-        		paragon[i] = newPlayer.paragonHC;
-        	}else{
-        		heroesGender[i] = info;
-        		heroesGameMode[i] = "softcore";
-        		paragon[i] = newPlayer.paragonSC;
-        	}
-        	
-        	Hero newHero = new Hero(heroesIds[i], heroesNames[i], heroesGender[i], heroesLevels[i], heroesClass[i], heroesGameMode[i], "false", btag, paragon[i]);
-        	System.out.println(heroesNames[i] + " " + heroesGameMode[i]);
-        	database.addHero(newHero);
-        	          	
-        	System.out.println(info);
+            
+            String btag = career.getString("battleTag");
+            btag = btag.replace("#", "-");
+            String paragonSC = career.getString("paragonLevel"); 
+            String paragonHC = career.getString("paragonLevelHardcore"); 
+        	Player newPlayer = new Player(btag, paragonSC, paragonHC);
+        	Error = database.addPlayer(newPlayer);
+        	if(!Error.equals(""))
+        		return null;
+            
+            JSONArray heroes = career.getJSONArray("heroes");
+            for(int i = 0; i < heroes.length(); i++){
+            	JSONObject hero = heroes.getJSONObject(i);
+            	
+            	String heroID = hero.getString("id");
+            	String heroName = hero.getString("name");
+            	String heroLevel = hero.getString("level");
+            	String heroClass = hero.getString("class");
+            	String heroGender = hero.getString("gender");
+            	if(heroGender.equals("1"))
+            		heroGender = "female";
+            	else
+            		heroGender = "male";
+            	String heroGameMode = hero.getString("hardcore");
+            	if(heroGameMode.equals("true"))
+            		heroGameMode = "Hardcore";
+            	else
+            		heroGameMode = "";
+            	String heroDead = hero.getString("dead");
+            	if(heroDead.equals("true"))
+            		heroGameMode += " - Dead";
+            	String heroParagon = hero.getString("paragonLevel");
+            	
+            	Hero newHero = new Hero(heroID, heroName, heroGender, heroLevel, heroClass, heroGameMode, "false", btag, heroParagon);
+            	database.addHero(newHero);
+            	
+            	System.out.println(heroName + " " + heroGameMode);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     	
 		return null;
@@ -168,7 +142,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
     protected void onPostExecute(Void unused) {
         delegate.asyncComplete(true);
         Dialog.dismiss();
-        if (Error != null) {
+        if (!Error.equals("")) {
         	customToast(Error);
         } else {
             customToast("Done!");

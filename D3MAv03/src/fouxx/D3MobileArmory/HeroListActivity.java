@@ -3,7 +3,6 @@ package fouxx.D3MobileArmory;
 import java.util.ArrayList;
 import com.example.d3ma.R;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.annotation.SuppressLint;

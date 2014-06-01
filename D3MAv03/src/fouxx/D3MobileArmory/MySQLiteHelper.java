@@ -49,14 +49,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     
     private static final String[] PLAYER_COLUMNS = {KEY_BTAG, KEY_PARAGONSC, KEY_PARAGONHC};
     
-    public void addPlayer(Player player){
+    public String addPlayer(Player player){
         Log.d("addPlayer", player.toString());
         SQLiteDatabase db = this.getWritableDatabase();
 
         
         Cursor checkIfExists = db.query(TABLE_PLAYERS, PLAYER_COLUMNS, "btag = ?", new String[] { player.getBtag() } , null, null, null, null);
         if (checkIfExists != null && checkIfExists.getCount() > 0)
-            	return;
+            	return "This profile already exists.";
         
         ContentValues values = new ContentValues();
         values.put(KEY_BTAG, player.getBtag()); 
@@ -64,6 +64,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_PARAGONHC, player.getParagonHC());
  
         db.insert(TABLE_PLAYERS, null, values);
+        return "";
     }
     
     public Player getPlayer(String btag){

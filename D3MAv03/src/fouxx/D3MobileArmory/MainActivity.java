@@ -172,12 +172,10 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 				EditText new_number = (EditText) dialog.findViewById(R.id.number);
 				String number = new_number.getText().toString();
 				String profile = btag+"-"+number;
-				String url_career = "http://eu.battle.net/d3/en/profile/"+profile+"/career";
-				String url = "http://eu.battle.net/d3/en/profile/"+profile+"/";
+				String url = "http://eu.battle.net/api/d3/profile/"+profile+"/";
 				
-				new ProfileDownloader(MainActivity.this, MainActivity.this).execute(url_career, url);
+				new ProfileDownloader(MainActivity.this, MainActivity.this).execute(url);
 				
-				System.out.println("dupa");
 				list = db.getAllPlayers();        		
     			adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
     			playerList.setAdapter(adapter);
