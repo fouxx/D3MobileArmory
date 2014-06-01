@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/color_list" >
+
+    <ImageView
+        android:id="@+id/heroPortrait"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/abc_ab_bottom_transparent_dark_holo" />
+
+    <TextView
+        android:id="@+id/heroName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/heroPortrait"
+        android:layout_toRightOf="@+id/heroPortrait"
+        android:layout_marginLeft="10dp"
+        
+        android:singleLine="true"
+		android:ellipsize="marquee"
+		android:marqueeRepeatLimit="marquee_forever"
+		android:focusable="false"
+		android:scrollHorizontally="true"
+		
+        android:textSize="24sp"
+        android:textColor="#D9B082"
+        android:text="@string/placeholder_name"/>
+
+    <TextView
+        android:id="@+id/heroLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/heroName"
+        android:layout_toRightOf="@+id/heroPortrait"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"
+        android:text="lvl" />
+    
+    <TextView
+        android:id="@+id/heroParagonLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="3dp"
+        android:layout_below="@+id/heroName"
+        android:layout_toRightOf="@+id/heroLevel"
+        android:textSize="16sp"
+        android:textColor="#7287BE"
+        android:text="plvl" />
+    
+    <TextView
+        android:id="@+id/heroClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="3dp"
+        android:layout_below="@+id/heroName"
+        android:layout_toRightOf="@+id/heroParagonLevel"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"
+        android:text="@string/placeholder_class" />
+    
+    <TextView
+        android:id="@+id/heroMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/heroLevel"
+        android:layout_toRightOf="@+id/heroPortrait"
+        android:textSize="16sp"
+        android:textColor="#FF0000"
+        android:text="" />
+
+</RelativeLayout>

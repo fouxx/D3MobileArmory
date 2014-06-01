@@ -1,18 +1,23 @@
 package fouxx.D3MobileArmory;
 
 import java.util.ArrayList;
-
 import com.example.d3ma.R;
-
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.annotation.SuppressLint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
+@SuppressLint("DefaultLocale")
 public class HeroListActivity extends ActionBarActivity {
 	
 	ListView heroList;
-	ArrayAdapter<Hero> adapter;
+	TextView playerBtag;
+	TextView playerNumber;
+	
+	ListViewAdapter adapter;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -30,7 +35,16 @@ public class HeroListActivity extends ActionBarActivity {
 			player = (Player) extras.getSerializable("PLAYER");
 			System.out.println(player.toString());
 		}
-		adapter = new ArrayAdapter<Hero>(this, R.layout.custom_textview, list);
+		playerBtag = (TextView) findViewById(R.id.btag);
+		playerNumber = (TextView) findViewById(R.id.number);
+		playerBtag.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/DiabloLight.ttf"));
+		String btag = player.btag;
+		String[] parts = btag.split("-");
+		playerBtag.setText(parts[0].toUpperCase());
+		playerNumber.setText("#"+parts[1]);
+		
+		adapter = new ListViewAdapter(getApplicationContext(), list);
+        heroList.setAdapter(adapter);
 		
 		heroList.setAdapter(adapter);
 		heroList.setTextFilterEnabled(true);

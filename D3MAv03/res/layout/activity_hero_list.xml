@@ -7,12 +7,46 @@
     android:orientation="vertical"
     tools:context="fouxx.D3MobileArmory.HeroListActivity"
     tools:ignore="MergeRootFrame" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="2dp" >
+
+        <TextView
+            android:id="@+id/btag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_btag"
+            
+	        android:singleLine="true"
+			android:ellipsize="marquee"
+			android:marqueeRepeatLimit="marquee_forever"
+			android:focusable="false"
+			android:scrollHorizontally="true"
+			
+            android:textColor="#F3E6AB"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:layout_alignBottom="@+id/btag"
+	        android:layout_toRightOf="@+id/btag"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginBottom="3dp"
+            android:text="@string/placeholder_btag"
+            android:textColor="#434037"
+            android:textSize="18sp" />
+    </RelativeLayout>
     
     <ListView
         android:id="@+id/heroList"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_height="wrap_content" >
+  <!--  android:listSelector="#00000000"   -->
     </ListView>
     
 </LinearLayout>
