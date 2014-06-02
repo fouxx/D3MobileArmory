@@ -30,13 +30,22 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         
         String CREATE_HERO_TABLE = "CREATE TABLE heroes ( " + 
         		"ID TEXT, name TEXT, gender TEXT, level TEXT, "+
-        		"heroClass TEXT, mode TEXT, downloaded TEXT, btag, paragon TEXT, PRIMARY KEY(ID) )";
+        		"heroClass TEXT, mode TEXT, downloaded TEXT, btag TEXT, paragon TEXT, PRIMARY KEY(ID) )";
         db.execSQL(CREATE_HERO_TABLE);
+        
+        String CREATE_ITEM_TABLE = "CREATE TABLE items ( " +
+        		"slot TEXT, heroID TEXT, " +
+        		"name TEXT, icon TEXT, color TEXT, tooltip TEXT, level TEXT, " +
+        		"accountBound TEXT, flavorText TEXT, type TEXT, armor TEXT, " +
+        		"DPS TEXT, attackSpeed TEXT, damage TEXT, blockChance TEXT, " +
+        		"primaryAtr TEXT, secondaryAtr TEXT, passive TEXT, PRIMARY KEY(slot, heroID) )";
+        db.execSQL(CREATE_ITEM_TABLE);
     }
     
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS players");
         db.execSQL("DROP TABLE IF EXISTS heroes");
+        db.execSQL("DROP TABLE IF EXISTS items");
         this.onCreate(db);
     }
     //Table PLAYERS
@@ -121,6 +130,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     
     public void deletePlayer(Player player) {
         SQLiteDatabase db = this.getWritableDatabase();
+        
+        ArrayList <String> ids = new ArrayList<String>();
+        String query = "SELECT * FROM " + TABLE_HEROES + " WHERE " + KEY_BTAG + " = '" + player.getBtag() + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+            	ids.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        for(int j = 0; j < ids.size(); j++){
+        	db.delete(TABLE_ITEMS, KEY_HERO_ID+" = ?", new String[] { ids.get(j) });
+        }
  
         db.delete(TABLE_PLAYERS, KEY_BTAG+" = ?", 
         		new String[] { player.getBtag() });
@@ -217,5 +238,105 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
     
     ////////////////////////////////////////////////////////////////////////////////////
     
+    private static final String TABLE_ITEMS = "items";
     
+    //Columns PLAYERS
+    private static final String KEY_SLOT = "slot";    
+    private static final String KEY_HERO_ID = "heroID";
+    
+    private static final String KEY_ITEM_NAME = "name";
+    private static final String KEY_ICON = "icon";    
+    private static final String KEY_COLOR = "color";
+    private static final String KEY_TOOLTIP = "tooltip";
+    private static final String KEY_ITEM_LEVEL = "level";
+    private static final String KEY_ACCOUNT_BOUND = "accountBound";
+    private static final String KEY_FLAVOR_TEXT = "flavorText";
+    private static final String KEY_TYPE = "type";
+    private static final String KEY_ARMOR = "armor";
+    private static final String KEY_DPS = "DPS";
+    private static final String KEY_ATTACK_SPEED = "attackSpeed";
+    private static final String KEY_DAMAGE = "damage";
+    private static final String KEY_BLOCK_CHANCE = "blockChance";
+    private static final String KEY_PRIMARY_ATR = "primaryAtr";
+    private static final String KEY_SECONDARY_ATR = "secondaryAtr";
+    private static final String KEY_PASSIVE = "passive";
+    
+    
+    private static final String[] ITEM_COLUMNS = {KEY_SLOT, KEY_HERO_ID, 
+    	KEY_ITEM_NAME, KEY_ICON, KEY_COLOR, KEY_TOOLTIP, KEY_ITEM_LEVEL, 
+    	KEY_ACCOUNT_BOUND, KEY_FLAVOR_TEXT, KEY_TYPE, KEY_ARMOR,
+    	KEY_DPS, KEY_ATTACK_SPEED, KEY_DAMAGE, KEY_BLOCK_CHANCE,
+    	KEY_PRIMARY_ATR, KEY_SECONDARY_ATR, KEY_PASSIVE};
+    
+    public void addItem(Item item){
+        Log.d("addHero", item.toString());
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        
+        Cursor checkIfExists = db.query(TABLE_ITEMS, ITEM_COLUMNS, "slot = ? AND heroID = ?", new String[] { item.slot, item.heroID } , null, null, null, null);
+        if (checkIfExists != null && checkIfExists.getCount() > 0)
+            	return;
+        
+        ContentValues values = new ContentValues();
+        values.put(KEY_SLOT, item.slot); 
+        values.put(KEY_HERO_ID, item.heroID); 
+        
+        values.put(KEY_ITEM_NAME, item.name);
+        values.put(KEY_ICON, item.icon);
+        values.put(KEY_COLOR, item.color);
+        values.put(KEY_TOOLTIP, item.tooltip);
+        values.put(KEY_ITEM_LEVEL, item.level);
+        values.put(KEY_ACCOUNT_BOUND, item.accountBound);
+        values.put(KEY_FLAVOR_TEXT, item.flavorText);
+        values.put(KEY_TYPE, item.type);
+        values.put(KEY_ARMOR, item.armor);
+        values.put(KEY_DPS, item.DPS);
+        values.put(KEY_ATTACK_SPEED, item.attackSpeed);
+        values.put(KEY_DAMAGE, item.damage);
+        values.put(KEY_BLOCK_CHANCE, item.blockChance);
+        values.put(KEY_PRIMARY_ATR, item.primaryAtr);
+        values.put(KEY_SECONDARY_ATR, item.secondaryAtr);
+        values.put(KEY_PASSIVE, item.passive);
+ 
+        db.insert(TABLE_ITEMS, null, values);
+    }
+    
+    public ArrayList<Item> getAllHerosItems(Hero hero) {
+        ArrayList<Item> items = new ArrayList<Item>();
+  
+        String query = "SELECT  * FROM " + TABLE_ITEMS + " WHERE " + KEY_HERO_ID + " = '" + hero.ID + "'";
+  
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+  
+        Item item = null;
+        if (cursor.moveToFirst()) {
+            do {
+            	item = new Item();
+            	item.slot = cursor.getString(0);
+            	item.heroID = cursor.getString(1);
+            	item.name = cursor.getString(2);
+            	item.icon = cursor.getString(3);
+            	item.color = cursor.getString(4);
+            	item.tooltip = cursor.getString(5);
+            	item.level = cursor.getString(6);
+            	item.accountBound = cursor.getString(7);
+            	item.flavorText = cursor.getString(8);
+            	item.type = cursor.getString(9);
+            	item.armor = cursor.getString(10);
+            	item.DPS = cursor.getString(11);
+            	item.attackSpeed = cursor.getString(12);
+            	item.damage = cursor.getString(13);
+            	item.blockChance = cursor.getString(14);
+            	item.primaryAtr = cursor.getString(15);
+            	item.secondaryAtr = cursor.getString(16);
+            	item.passive = cursor.getString(17);
+  
+                items.add(item);
+            } while (cursor.moveToNext());
+        }
+  
+        Log.d("getAllPlayersHeroes()", items.toString());
+        return items;
+    }
 }

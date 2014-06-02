@@ -136,6 +136,12 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 				if(items.isNull(slots[i])){				
 					String itemName = "empty";
 					// TODO dodaj do bazy danych dla danego b-tagu i danego slotu coœ o nazwie empty
+					Item new_empty_item = new Item(slots[i], heroID, 
+							itemName, "", "", "", "",
+							"", "", "", "",
+							"", "", "", "",
+							"", "", "");
+					database.addItem(new_empty_item);
 					continue;
 				}
 				slot = items.getJSONObject(slots[i]);				
@@ -217,6 +223,7 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 	    				accountBound, itemFlavorText, itemType, itemArmor,
 	    				itemDPS, itemAttackSpeed, itemDamage, itemBlockChance,
 	    				itemPrimary, itemSecondary, itemPassive);
+	    		database.addItem(new_item);
 	    		// TODO Gems!
 			}
 			

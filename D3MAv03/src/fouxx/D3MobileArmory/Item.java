@@ -17,8 +17,8 @@ public class Item {
 	String attackSpeed;
 	String damage;
 	String blockChance;
-	String primary;
-	String secondary;
+	String primaryAtr;
+	String secondaryAtr;
 	String passive;
 	
 	public Item() { }
@@ -27,7 +27,7 @@ public class Item {
 			String name, 		 String icon, 			String color, 	String tooltip, 	String level,
 			String accountBound, String flavorText, 	String type, 	String armor,
 			String DPS, 		 String attackSpeed, 	String damage, 	String blockChance,
-			String primary, 	 String secondary, 		String passive){
+			String primaryAtr, 	 String secondaryAtr, 		String passive){
 		
 		this.slot = slot;
 		this.heroID = heroID;
@@ -45,8 +45,13 @@ public class Item {
 		this.attackSpeed = attackSpeed;
 		this.damage = damage;
 		this.blockChance = blockChance;
-		this.primary = primary;
-		this.secondary = secondary;
+		this.primaryAtr = primaryAtr;
+		this.secondaryAtr = secondaryAtr;
 		this.passive = passive;
+	}
+	
+	@Override
+	public String toString(){
+		return DPS;		
 	}
 }
