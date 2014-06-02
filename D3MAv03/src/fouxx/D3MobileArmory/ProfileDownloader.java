@@ -32,7 +32,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
 	private Context context;
 	private Typeface font;
 	private String careerString;
-	private MySQLiteHelper database;
+	private D3MobileArmorySQLiteHelper database;
 	private AsyncDelegate delegate;
 	
 	public ProfileDownloader(Context context, AsyncDelegate delegate){
@@ -41,7 +41,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
 		this.Error = null;
 		this.Client = new DefaultHttpClient();
 		this.font = Typeface.createFromAsset(context.getAssets(),"fonts/DiabloLight.ttf");
-		this.database = new MySQLiteHelper(context);
+		this.database = new D3MobileArmorySQLiteHelper(context);
 		this.delegate = delegate;
 	}
     

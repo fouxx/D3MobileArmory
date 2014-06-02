@@ -27,7 +27,7 @@ public class Item {
 			String name, 		 String icon, 			String color, 	String tooltip, 	String level,
 			String accountBound, String flavorText, 	String type, 	String armor,
 			String DPS, 		 String attackSpeed, 	String damage, 	String blockChance,
-			String primaryAtr, 	 String secondaryAtr, 		String passive){
+			String primaryAtr, 	 String secondaryAtr, 	String passive){
 		
 		this.slot = slot;
 		this.heroID = heroID;
@@ -48,6 +48,14 @@ public class Item {
 		this.primaryAtr = primaryAtr;
 		this.secondaryAtr = secondaryAtr;
 		this.passive = passive;
+	}
+	
+	public Item(String slot, String heroID){
+		this(slot, heroID, 
+				"empty", "", "", "", "",
+				"", "", "", "",
+				"", "", "", "",
+				"", "", "");
 	}
 	
 	@Override

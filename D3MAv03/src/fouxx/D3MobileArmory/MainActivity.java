@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.example.d3ma.R;
 
 import fouxx.D3MobileArmory.HeroListActivity;
-import fouxx.D3MobileArmory.MySQLiteHelper;
+import fouxx.D3MobileArmory.D3MobileArmorySQLiteHelper;
 import fouxx.D3MobileArmory.Player;
 import fouxx.D3MobileArmory.ProfileDownloader;
 import android.support.v7.app.ActionBarActivity;
@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 	Typeface font;
 	Dialog dialog;
 	ListView playerList;
-	MySQLiteHelper db;
+	D3MobileArmorySQLiteHelper db;
 	
 	String Career, Heroes;
 	ArrayList<Player> list;
@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 		setContentView(R.layout.activity_main);
 		getActionBar().hide();
 		
-		db = new MySQLiteHelper(this);
+		db = new D3MobileArmorySQLiteHelper(this);
 		addNewPlayer = (Button) findViewById(R.id.addNewPlayer);
 		font = Typeface.createFromAsset(getAssets(),"fonts/DiabloLight.ttf");
 		addNewPlayer.setTypeface(font);

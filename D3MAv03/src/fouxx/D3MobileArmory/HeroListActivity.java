@@ -24,8 +24,9 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 	ListViewAdapter adapter;
 	
 	Player player;
+	Hero hero;
 	ArrayList <Hero> list;
-	MySQLiteHelper db;
+	D3MobileArmorySQLiteHelper db;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -60,14 +61,15 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
-				Hero hero = list.get(position);
+				hero = list.get(position);
 				if(hero.downloaded.equals("false")){
 					String heroProfile = "http://eu.battle.net/api/d3/profile/"+player.btag+"/hero/"+hero.ID;
 					new HeroDownloader(HeroListActivity.this, HeroListActivity.this).execute(heroProfile, hero.ID);
+				}else{
+		        	Intent i = new Intent(getApplicationContext(), HeroDetailsActivity.class);
+		        	i.putExtra("HERO", hero);
+		        	startActivity(i);
 				}
-	        	//Intent i = new Intent(getApplicationContext(), HeroGearActivity.class);
-	        	//i.putExtra("HERO", hero);
-	        	//startActivity(i);
 			}
 		});
 		
@@ -76,6 +78,9 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 	@Override
 	public void asyncComplete(boolean success) {
 		if(success){
+        	Intent i = new Intent(getApplicationContext(), HeroDetailsActivity.class);
+        	i.putExtra("HERO", hero);
+        	startActivity(i);
 			System.out.println("Hooray!");
 		}	
 	}

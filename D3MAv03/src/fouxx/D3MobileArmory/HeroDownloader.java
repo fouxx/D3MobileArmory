@@ -39,7 +39,7 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
     private Context context;
 	private Typeface font;
 	private String careerString;
-	private MySQLiteHelper database;
+	private D3MobileArmorySQLiteHelper database;
 	private AsyncDelegate delegate;
 	
 	public HeroDownloader(Context context, AsyncDelegate delegate){
@@ -48,7 +48,7 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 		this.Error = "";
 		this.Client = new DefaultHttpClient();
 		this.font = Typeface.createFromAsset(context.getAssets(),"fonts/DiabloLight.ttf");
-		this.database = new MySQLiteHelper(context);
+		this.database = new D3MobileArmorySQLiteHelper(context);
 		this.delegate = delegate;
 	}
 	
@@ -133,15 +133,8 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
   				  "mainHand", "offHand", "waist", "rightFinger", "leftFinger", "neck"};
 			JSONObject slot;
 			for(int i = 0; i < 13; i++){
-				if(items.isNull(slots[i])){				
-					String itemName = "empty";
-					// TODO dodaj do bazy danych dla danego b-tagu i danego slotu coœ o nazwie empty
-					Item new_empty_item = new Item(slots[i], heroID, 
-							itemName, "", "", "", "",
-							"", "", "", "",
-							"", "", "", "",
-							"", "", "");
-					database.addItem(new_empty_item);
+				if(items.isNull(slots[i])){
+					database.addItem(new Item(slots[i], heroID));
 					continue;
 				}
 				slot = items.getJSONObject(slots[i]);				
@@ -154,6 +147,7 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 		    	
 		    	String itemTooltipUrl = "http://eu.battle.net/api/d3/data/"+itemTooltip;
 		    	String tooltip = getSource(itemTooltipUrl);
+		    	
 		    	JSONObject item = new JSONObject(tooltip);
 		    	String itemLevel = item.getString("requiredLevel");
 		    	String accountBound = item.getString("accountBound");

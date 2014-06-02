@@ -12,6 +12,7 @@
         android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/description"
         android:src="@drawable/abc_ab_bottom_transparent_dark_holo" />
 
     <TextView
@@ -36,7 +37,7 @@
         android:layout_toRightOf="@+id/heroPortrait"
         android:textSize="16sp"
         android:textColor="@color/text_color"
-        android:text="lvl" />
+        android:text="@string/placeholder_level" />
     
     <TextView
         android:id="@+id/heroParagonLevel"
@@ -48,7 +49,7 @@
         android:layout_toRightOf="@+id/heroLevel"
         android:textSize="16sp"
         android:textColor="#7287BE"
-        android:text="plvl" />
+        android:text="@string/placeholder_level" />
     
     <TextView
         android:id="@+id/heroClass"

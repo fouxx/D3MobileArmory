@@ -1,6 +1,7 @@
 package fouxx.D3MobileArmory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fouxx.D3MobileArmory.Player;
 import android.content.ContentValues;
@@ -10,13 +11,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class MySQLiteHelper extends SQLiteOpenHelper{
+public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
     private static final String DATABASE_NAME = "D3MobileArmory";
     
-    public MySQLiteHelper(Context context) {
+    public D3MobileArmorySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
     }
     
@@ -301,8 +302,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         db.insert(TABLE_ITEMS, null, values);
     }
     
-    public ArrayList<Item> getAllHerosItems(Hero hero) {
-        ArrayList<Item> items = new ArrayList<Item>();
+    public List<Item> getAllHerosItems(Hero hero) {
+        List<Item> items = new ArrayList<Item>();
   
         String query = "SELECT  * FROM " + TABLE_ITEMS + " WHERE " + KEY_HERO_ID + " = '" + hero.ID + "'";
   

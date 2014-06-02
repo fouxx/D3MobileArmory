@@ -11,8 +11,11 @@
     <string name="update">Update</string>
     <string name="title_activity_hero_list">HeroListActivity</string>
     <string name="placeholder_btag">Btag</string>
-    
-    
     <string name="placeholder_name">Name</string>
     <string name="placeholder_class">Class</string>
+    <string name="placeholder_level">lvl</string>
+    <string name="description">Hero portrait</string>
+    <string name="title_activity_hero_details">HeroDetailsActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
