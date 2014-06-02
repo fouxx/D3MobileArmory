@@ -76,7 +76,6 @@ public class ListViewAdapter extends BaseAdapter {
 	  		c = c.replace("-", "");
 	  
 	  	String uri = c+"_"+hero.gender;
-	  	System.out.print(uri);
 	  	if(uri.contains(" "))
 	  		uri = uri.replace(" ", "");
 	  

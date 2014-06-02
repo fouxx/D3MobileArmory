@@ -62,8 +62,6 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 		
 		playerList.setAdapter(adapter);
 		playerList.setTextFilterEnabled(true);
-
-	    //registerForContextMenu(playerList);
 		
 		playerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 		    @Override
@@ -93,7 +91,9 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {  
         	public boolean onMenuItemClick(MenuItem item) {        		
         		if(item.getTitle().equals("Delete")){
-//!        			Add confirmation dialog!
+        			
+//!        			TODO Add confirmation dialog!
+        			
         			Player deletePlayer = list.get(pos);
         			db.deletePlayer(deletePlayer);
         			
@@ -103,49 +103,21 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
         			playerList.setTextFilterEnabled(true);
         		}
         		if(item.getTitle().equals("Update")){
-        			//Do sth
+        			
+//					TODO Update
+        			
         		}
         		return true;  
             }  
         });
         popup.show();
 	    return true;
-	}	
-	
-	/*
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-	    ContextMenuInfo menuInfo) {
-		if (v.getId()==R.id.playerList) {
-		    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-		    menu.setHeaderTitle(list.get(info.position).toString());
-		    for (int i = 0; i < menuItems.length; i++) {
-		    	menu.add(Menu.NONE, i, i, menuItems[i]);
-		    }
-		}
 	}
-	
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-		int menuItemIndex = item.getItemId();
-		
-		if(menuItemIndex == 0){
-			Player deletePlayer = list.get(info.position);
-			db.deletePlayer(deletePlayer);
-			
-			list = db.getAllPlayers();        		
-			ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
-			playerList.setAdapter(adapter);
-			playerList.setTextFilterEnabled(true);
-		}
-		return true;
-	}
-	*/
 	
 	public void onAddNewPlayerClick(View v){
 		dialog = new Dialog(this, R.style.customDialog);
 		dialog.setContentView(R.layout.add_profile_dialog);
+		
 		TextView title = (TextView) dialog.findViewById(android.R.id.title);
 		title.setText("ADD NEW PROFILE");
 		title.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -171,8 +143,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 				String btag = new_btag.getText().toString();
 				EditText new_number = (EditText) dialog.findViewById(R.id.number);
 				String number = new_number.getText().toString();
-				String profile = btag+"-"+number;
-				String url = "http://eu.battle.net/api/d3/profile/"+profile+"/";
+				String url = "http://eu.battle.net/api/d3/profile/"+btag+"-"+number+"/";
 				
 				new ProfileDownloader(MainActivity.this, MainActivity.this).execute(url);
 				

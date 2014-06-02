@@ -200,4 +200,22 @@ public class MySQLiteHelper extends SQLiteOpenHelper{
         Log.d("getAllPlayersHeroes()", heroes.toString());
         return heroes;
     }
+    
+    public boolean isGearDownloaded(String heroID){
+        SQLiteDatabase db = this.getReadableDatabase();
+    	Cursor cursor = db.query(TABLE_HEROES, HERO_COLUMNS, "ID = ?", new String[] { heroID } , null, null, null, null);
+    	cursor.moveToFirst();
+    	if(cursor.getString(6).equals("true")){
+    		return true;
+    	}    	
+    	return false;
+    }
+    
+    public void addHeroStats(){
+    	//TODO Adding stats
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////
+    
+    
 }

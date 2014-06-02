@@ -60,7 +60,7 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
 	}
     
     protected void onPreExecute() {
-        Dialog.setMessage("Downloading source..");
+        Dialog.setMessage("Downloading profile info..");
         Dialog.show();
     }
     
@@ -128,8 +128,6 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
             	
             	Hero newHero = new Hero(heroID, heroName, heroGender, heroLevel, heroClass, heroGameMode, "false", btag, heroParagon);
             	database.addHero(newHero);
-            	
-            	System.out.println(heroName + " " + heroGameMode);
             }
         } catch (JSONException e) {
             e.printStackTrace();
