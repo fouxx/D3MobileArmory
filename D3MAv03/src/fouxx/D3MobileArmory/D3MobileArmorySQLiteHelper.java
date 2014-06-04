@@ -64,14 +64,14 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
 
         
-        Cursor checkIfExists = db.query(TABLE_PLAYERS, PLAYER_COLUMNS, "btag = ?", new String[] { player.getBtag() } , null, null, null, null);
+        Cursor checkIfExists = db.query(TABLE_PLAYERS, PLAYER_COLUMNS, "btag = ?", new String[] { player.btag } , null, null, null, null);
         if (checkIfExists != null && checkIfExists.getCount() > 0)
             	return "This profile already exists.";
         
         ContentValues values = new ContentValues();
-        values.put(KEY_BTAG, player.getBtag()); 
-        values.put(KEY_PARAGONSC, player.getParagonSC()); 
-        values.put(KEY_PARAGONHC, player.getParagonHC());
+        values.put(KEY_BTAG, player.btag); 
+        values.put(KEY_PARAGONSC, player.paragonSC); 
+        values.put(KEY_PARAGONHC, player.paragonHC);
  
         db.insert(TABLE_PLAYERS, null, values);
         return "";
@@ -95,33 +95,23 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         else
         	return null;
  
-        Player player = new Player();
-        player.setBtag(cursor.getString(0));
-        player.setParagonSC(cursor.getString(1));
-        player.setParagonHC(cursor.getString(2));
- 
+        Player player = new Player(cursor.getString(0), cursor.getString(1), cursor.getString(2));
         Log.d("getPlayer("+btag+")", player.toString());
 
         return player;
     }
     
-    public ArrayList<Player> getAllPlayers() {
-        ArrayList<Player> players = new ArrayList<Player>();
+    public List<Player> getAllPlayers() {
+        List<Player> players = new ArrayList<Player>();
   
         String query = "SELECT  * FROM " + TABLE_PLAYERS;
   
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
   
-        Player player = null;
         if (cursor.moveToFirst()) {
             do {
-                player = new Player();
-                player.setBtag(cursor.getString(0));
-                player.setParagonSC(cursor.getString(1));
-                player.setParagonHC(cursor.getString(2));
-  
-                players.add(player);
+                players.add(new Player(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
             } while (cursor.moveToNext());
         }
   
@@ -133,7 +123,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         
         ArrayList <String> ids = new ArrayList<String>();
-        String query = "SELECT * FROM " + TABLE_HEROES + " WHERE " + KEY_BTAG + " = '" + player.getBtag() + "'";
+        String query = "SELECT * FROM " + TABLE_HEROES + " WHERE " + KEY_BTAG + " = '" + player.btag + "'";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
@@ -145,9 +135,9 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         }
  
         db.delete(TABLE_PLAYERS, KEY_BTAG+" = ?", 
-        		new String[] { player.getBtag() });
+        		new String[] { player.btag });
         db.delete(TABLE_HEROES, KEY_BTAG+" = ?", 
-        		new String[] { player.getBtag() });
+        		new String[] { player.btag });
  
         db.close();
         Log.d("deletePlayer", player.toString());
@@ -196,7 +186,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
     public ArrayList<Hero> getAllPlayersHeroes(Player player) {
         ArrayList<Hero> heroes = new ArrayList<Hero>();
   
-        String query = "SELECT  * FROM " + TABLE_HEROES + " WHERE " + KEY_BTAG + " = '" + player.getBtag() + "'";
+        String query = "SELECT  * FROM " + TABLE_HEROES + " WHERE " + KEY_BTAG + " = '" + player.btag + "'";
   
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -227,10 +217,19 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getReadableDatabase();
     	Cursor cursor = db.query(TABLE_HEROES, HERO_COLUMNS, "ID = ?", new String[] { heroID } , null, null, null, null);
     	cursor.moveToFirst();
-    	if(cursor.getString(6).equals("true")){
-    		return true;
+    	if(cursor.getString(6).equals("false")){
+    		return false;
     	}    	
-    	return false;
+    	return true;
+    }
+    
+    public void setGearDownloaded(String heroID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        
+        db.execSQL("UPDATE "+ TABLE_HEROES +
+                " SET " + KEY_DOWNLOADED + " = " + "'true'" +
+                " WHERE " + KEY_ID + " = ?",
+                new String[] { heroID });
     }
     
     public void addHeroStats(){

@@ -3,25 +3,168 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/paper"
     tools:context="fouxx.D3MobileArmory.HeroDetailsActivity"
     tools:ignore="MergeRootFrame" >
+    
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:textColor="#ffead4"
+        android:textSize="36sp"
+        android:text="TextView" />
 
     <ImageButton
         android:id="@+id/head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="82dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/abc_ab_bottom_solid_dark_holo" />
+        android:layout_below="@+id/name"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/abc_item_background_holo_dark" />
 
     <ImageButton
         android:id="@+id/torso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="82dp"
+        android:layout_height="128dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
 		android:layout_centerHorizontal="true"
         android:layout_below="@+id/head"
         android:layout_marginTop="5dp"
-        android:src="@drawable/abc_ab_bottom_solid_dark_holo" />
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/waist"
+        android:layout_width="64dp"
+        android:layout_height="32dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+		android:layout_centerHorizontal="true"
+        android:layout_below="@+id/torso"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/legs"
+        android:layout_width="64dp"
+        android:layout_height="96dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/waist"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/feet"
+        android:layout_width="64dp"
+        android:layout_height="96dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/legs"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/abc_item_background_holo_dark" />
+
+    <ImageButton
+        android:id="@+id/shoulders"
+        android:layout_width="64dp"
+        android:layout_height="104dp"
+        android:layout_marginRight="10dp"
+        android:layout_above="@+id/hands"
+        android:layout_toLeftOf="@+id/torso"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/hands"
+        android:layout_width="64dp"
+        android:layout_height="96dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/torso"
+        android:layout_above="@+id/leftFinger"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/leftFinger"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/waist"
+        android:layout_above="@+id/mainHand"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/mainHand"
+        android:layout_width="72dp"
+        android:layout_height="144dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/legs"
+        android:layout_alignBottom="@id/feet"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/neck"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/torso"
+        android:layout_above="@+id/bracers"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/bracers"
+        android:layout_width="64dp"
+        android:layout_height="96dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/torso"
+        android:layout_above="@+id/rightFinger"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/rightFinger"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/waist"
+        android:layout_above="@+id/offHand"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/abc_item_background_holo_dark" />
+    
+    <ImageButton
+        android:id="@+id/offHand"
+        android:layout_width="72dp"
+        android:layout_height="144dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/legs"
+        android:layout_alignBottom="@id/feet"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/abc_item_background_holo_dark" />
 
 </RelativeLayout>

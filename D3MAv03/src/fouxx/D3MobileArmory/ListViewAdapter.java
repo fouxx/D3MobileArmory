@@ -1,8 +1,10 @@
 package fouxx.D3MobileArmory;
 
-import java.util.ArrayList;
+
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
-import com.example.d3ma.R;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -18,9 +20,9 @@ import android.widget.TextView;
 
 public class ListViewAdapter extends BaseAdapter {
 	private Context context;
-	private ArrayList<Hero> heroList;
+	private List<Hero> heroList;
 	
-	ListViewAdapter(Context context, ArrayList<Hero> heroList){
+	ListViewAdapter(Context context, List<Hero> heroList){
 		this.context = context;
 		this.heroList = heroList;
 	}

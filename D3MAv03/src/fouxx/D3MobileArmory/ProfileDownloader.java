@@ -13,16 +13,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.d3ma.R;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class ProfileDownloader extends AsyncTask<String, Void, Void> {
 	private final HttpClient Client;
@@ -30,7 +23,6 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
     private ProgressDialog Dialog;
     
 	private Context context;
-	private Typeface font;
 	private String careerString;
 	private D3MobileArmorySQLiteHelper database;
 	private AsyncDelegate delegate;
@@ -40,23 +32,8 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
 		this.Dialog  = new ProgressDialog(context);
 		this.Error = null;
 		this.Client = new DefaultHttpClient();
-		this.font = Typeface.createFromAsset(context.getAssets(),"fonts/DiabloLight.ttf");
 		this.database = new D3MobileArmorySQLiteHelper(context);
 		this.delegate = delegate;
-	}
-    
-	@SuppressLint("DefaultLocale")
-	public void customToast(String toast){
-		Toast t = Toast.makeText(context, toast, Toast.LENGTH_SHORT);
-		LinearLayout layout = (LinearLayout) t.getView();
-		layout.setBackgroundResource(R.drawable.toast_background);
-		if (layout.getChildCount() > 0) {
-		  TextView tv = (TextView) layout.getChildAt(0);
-		  tv.setText(tv.getText().toString().toUpperCase());
-		  tv.setTypeface(font);
-		  tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-		}
-		t.show();
 	}
     
     protected void onPreExecute() {
@@ -141,9 +118,9 @@ public class ProfileDownloader extends AsyncTask<String, Void, Void> {
         delegate.asyncComplete(true);
         Dialog.dismiss();
         if (!Error.equals("")) {
-        	customToast(Error);
+        	new D3MAToast(context, Error).show();
         } else {
-            customToast("Done!");
+        	new D3MAToast(context, "Done!").show();
         }
     }
 }

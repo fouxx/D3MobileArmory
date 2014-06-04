@@ -4,4 +4,11 @@
     <color name="text">#FFFFFF</color>
     <color name="text_color">#a59585</color>
     <color name="list">#eaaa6d</color>
+    
+    
+    <color name="white">#ffffff</color>
+    <color name="blue">#6969ff</color>
+    <color name="yellow">#ffff00</color>
+    <color name="orange">#bf642f</color>
+    <color name="green">#05f200</color>
 </resources>

@@ -18,18 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.d3ma.R;
-
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.view.Gravity;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class HeroDownloader extends AsyncTask<String, Void, Void>{
 	private final HttpClient Client;
@@ -37,37 +29,21 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
     private ProgressDialog Dialog;
     
     private Context context;
-	private Typeface font;
-	private String careerString;
 	private D3MobileArmorySQLiteHelper database;
 	private AsyncDelegate delegate;
 	
 	public HeroDownloader(Context context, AsyncDelegate delegate){
 		this.context = context;
+		this.delegate = delegate;
+		
 		this.Dialog  = new ProgressDialog(context);
 		this.Error = "";
 		this.Client = new DefaultHttpClient();
-		this.font = Typeface.createFromAsset(context.getAssets(),"fonts/DiabloLight.ttf");
 		this.database = new D3MobileArmorySQLiteHelper(context);
-		this.delegate = delegate;
-	}
-	
-	@SuppressLint("DefaultLocale")
-	public void customToast(String toast){
-		Toast t = Toast.makeText(context, toast, Toast.LENGTH_SHORT);
-		LinearLayout layout = (LinearLayout) t.getView();
-		layout.setBackgroundResource(R.drawable.toast_background);
-		if (layout.getChildCount() > 0) {
-		  TextView tv = (TextView) layout.getChildAt(0);
-		  tv.setText(tv.getText().toString().toUpperCase());
-		  tv.setTypeface(font);
-		  tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-		}
-		t.show();
 	}
 	
     protected void onPreExecute() {
-        Dialog.setMessage("Downloading source..");
+        Dialog.setMessage("Downloading source...");
         Dialog.show();
     }
     
@@ -132,12 +108,12 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 			String []slots = {"head", "torso", "feet", "hands", "shoulders", "legs", "bracers", 
   				  "mainHand", "offHand", "waist", "rightFinger", "leftFinger", "neck"};
 			JSONObject slot;
-			for(int i = 0; i < 13; i++){
-				if(items.isNull(slots[i])){
-					database.addItem(new Item(slots[i], heroID));
+			for(String slotName : slots){
+				if(items.isNull(slotName)){
+					database.addItem(new Item(slotName, heroID));
 					continue;
 				}
-				slot = items.getJSONObject(slots[i]);				
+				slot = items.getJSONObject(slotName);				
 				String itemName = slot.getString("name");
 				String itemIcon = slot.getString("icon");
 				String itemColor = slot.getString("displayColor");
@@ -174,7 +150,7 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 		    		
 		    		if(primary.length() > 0){
 		    			String text = primary.getJSONObject(0).getString("text");
-		    			if(text.contains("Damage") && text.length() - text.replace(" ", "").length() == 2){
+		    			if(!text.contains("imum") && text.contains("Damage") && text.length() - text.replace(" ", "").length() == 2){
 		    				String[] parts = text.split(" ", 2);
 		    				parts[0] = parts[0].replace("+", "");
 		    				String []damage = parts[0].split("–");		//Special character instead of ordinary "-" !!!    				
@@ -212,15 +188,14 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 	    		for(int j = 0; j < a_passive.length(); j++){
 	    			itemPassive += a_passive.getJSONObject(j).getString("text")+"\n";
 	    		}
-	    		Item new_item = new Item(slots[i], heroID, 
+	    		Item new_item = new Item(slotName, heroID, 
 	    				itemName, itemIcon, itemColor, itemTooltip, itemLevel,
 	    				accountBound, itemFlavorText, itemType, itemArmor,
 	    				itemDPS, itemAttackSpeed, itemDamage, itemBlockChance,
 	    				itemPrimary, itemSecondary, itemPassive);
 	    		database.addItem(new_item);
 	    		// TODO Gems!
-			}
-			
+			}			
 		} catch (JSONException e) {
             e.printStackTrace();
         }
@@ -232,9 +207,9 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
         delegate.asyncComplete(true);
         Dialog.dismiss();
         if (!Error.equals("")) {
-        	customToast(Error);
+        	new D3MAToast(context, Error).show();
         } else {
-            customToast("Done!");
+        	new D3MAToast(context, "Done!").show();
         }
     }
 

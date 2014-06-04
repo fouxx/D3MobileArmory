@@ -36,6 +36,10 @@
     <style name="customDialog" parent="android:Theme.Dialog"> 
         <item name="android:windowBackground">@drawable/dialog_background</item>
     </style> 
+
+    <style name="customItemDialog" parent="android:Theme.Dialog"> 
+        <item name="android:windowBackground">@drawable/dialog_b</item>
+    </style> 
     
     <style name="popupMenuStyle" parent="@android:style/Widget.PopupMenu">
 		<item name="android:popupBackground">@drawable/popup_background</item>

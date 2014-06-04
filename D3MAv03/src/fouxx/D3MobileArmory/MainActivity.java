@@ -1,8 +1,7 @@
 package fouxx.D3MobileArmory;
 
 import java.util.ArrayList;
-
-import com.example.d3ma.R;
+import java.util.List;
 
 import fouxx.D3MobileArmory.HeroListActivity;
 import fouxx.D3MobileArmory.D3MobileArmorySQLiteHelper;
@@ -18,10 +17,8 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.app.Dialog;
 import android.content.Context;
@@ -40,7 +37,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 	D3MobileArmorySQLiteHelper db;
 	
 	String Career, Heroes;
-	ArrayList<Player> list;
+	List<Player> list;
 	ArrayAdapter<Player> adapter;
 
     String[] menuItems = {"DELETE", "UPDATE"};
@@ -135,7 +132,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 			@Override
 			public void onClick(View v) {
 				if(!isNetworkStatusAvialable(getApplicationContext())){
-					customToast("Unable to download content.\nCheck Internet connection.");
+					new D3MAToast(MainActivity.this, "Unable to download content.\nCheck Internet connection.").show();
 					return;
 				}				
 				
@@ -163,24 +160,10 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 			}
 		});
 	}
-	
-	public void customToast(String toast){
-		Toast t = Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_SHORT);
-		LinearLayout layout = (LinearLayout) t.getView();
-		layout.setBackgroundResource(R.drawable.toast_background);
-		if (layout.getChildCount() > 0) {
-		  TextView tv = (TextView) layout.getChildAt(0);
-		  tv.setText(tv.getText().toString().toUpperCase());
-		  tv.setTypeface(font);
-		  tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-		}
-		t.show();
-	}
 
     public static boolean isNetworkStatusAvialable (Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) 
-        {
+        if (connectivityManager != null) {
             NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
             if(netInfos != null)
             if(netInfos.isConnected()) 
