@@ -41,6 +41,7 @@ public class HeroDetailsActivity extends ActionBarActivity {
 			if(item.name.equals("empty")){
 				Drawable drawable = getResources().getDrawable(getResources().getIdentifier("item_empty", "drawable", getPackageName()));
 				itemIcon.setBackgroundDrawable(drawable);
+				itemIcon.setClickable(false);
 				continue;
 			}
     	    File storagePath = Environment.getExternalStorageDirectory();

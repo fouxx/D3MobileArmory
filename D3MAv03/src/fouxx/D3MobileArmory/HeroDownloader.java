@@ -119,6 +119,10 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 				String itemColor = slot.getString("displayColor");
 				String itemTooltip = slot.getString("tooltipParams");
 				
+				if(itemIcon.equals("crusadershield_000_demonhunter_male"))
+					itemIcon = "crusadershield_001_demonhunter_male";
+				if(itemIcon.equals("shield_000_demonhunter_male"))
+					itemIcon = "shield_001_demonhunter_male";
 				downloadIcon(itemIcon);
 		    	
 		    	String itemTooltipUrl = "http://eu.battle.net/api/d3/data/"+itemTooltip;
@@ -130,19 +134,22 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 		    	String itemFlavorText = (item.isNull("flavorText"))?"":item.getString("flavorText");
 		    	String itemType = item.getString("typeName");
 		    	
-		    	DecimalFormat df = new DecimalFormat("#,###.00");
+		    	DecimalFormat df = new DecimalFormat("#,###.0");
+		    	DecimalFormat two_places = new DecimalFormat("#.00");
 		    	DecimalFormat no_point = new DecimalFormat("#");
 		    	
+		    	Double d_itemArmor;
 		    	String itemArmor = "";
 		    	if(!item.isNull("armor")){
-		    		itemArmor = item.getJSONObject("armor").getString("min");
+		    		d_itemArmor = item.getJSONObject("armor").getDouble("min");
+		    		itemArmor = no_point.format(d_itemArmor);
 		    	}
 		    	String itemDPS = "", itemAttackSpeed = "", itemDamage = "";
 		    	if(!item.isNull("dps")){
 		    		Double d_itemDPS = item.getJSONObject("dps").getDouble("min");
 		    		itemDPS = df.format(d_itemDPS);
 		    		Double d_itemAttackSpeed = item.getJSONObject("attacksPerSecond").getDouble("min");
-		    		itemAttackSpeed = df.format(d_itemAttackSpeed);
+		    		itemAttackSpeed = two_places.format(d_itemAttackSpeed);
 		    		Double d_itemMinDamage = item.getJSONObject("minDamage").getDouble("min");
 		    		Double d_itemMaxDamage = item.getJSONObject("maxDamage").getDouble("min");
 		    		JSONObject attributes = item.getJSONObject("attributes");

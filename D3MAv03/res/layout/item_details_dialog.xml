@@ -1,6 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >    
 
-</RelativeLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:scrollbars="vertical"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	android:padding="5dp" >
+        
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	
+	    <ImageView
+	        android:id="@+id/itemIcon"
+	        android:layout_width="64dp"
+	        android:layout_height="128dp"
+	        android:scaleType="centerCrop"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:src="@drawable/abc_ab_bottom_solid_dark_holo" />
+	
+	    <TextView
+	        android:id="@+id/itemType"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignTop="@+id/itemIcon"
+	        android:layout_marginLeft="10dp"
+	        android:layout_toRightOf="@+id/itemIcon" />
+	
+	    <TextView
+	        android:id="@+id/armorOrDps"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:layout_toRightOf="@+id/itemIcon"
+	        android:layout_below="@+id/itemType"
+	        android:layout_marginTop="5dp"
+	        android:textSize="36sp"
+	        android:textColor="@color/white" />
+	
+	    <TextView
+	        android:id="@+id/armorOrDpsDesc"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/armorOrDps"
+	        android:layout_toRightOf="@+id/itemIcon"
+	        android:layout_marginLeft="10dp"
+	        android:textColor="#4DFFFFFF" />
+	
+	    <TextView
+	        android:id="@+id/damageOrBlock"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/armorOrDpsDesc"
+	        android:layout_marginTop="5dp"
+	        android:layout_toRightOf="@+id/itemIcon"
+	        android:layout_marginLeft="10dp"
+	        android:textColor="@color/white" />
+	
+	    <TextView
+	        android:id="@+id/damageOrBlockDesc"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/damageOrBlock"
+	        android:layout_toRightOf="@+id/damageOrBlock"
+	        android:textColor="#4DFFFFFF" />
+	
+	    <TextView
+	        android:id="@+id/attackSpeed"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/damageOrBlock"
+	        android:layout_toRightOf="@+id/itemIcon"
+	        android:layout_marginLeft="10dp"
+	        android:textColor="@color/white" />
+	
+	    <TextView
+	        android:id="@+id/attackSpeedDesc"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/attackSpeed"
+	        android:layout_toRightOf="@+id/attackSpeed"
+	        android:textColor="#4DFFFFFF" />
+
+	</RelativeLayout>
+	
+	<TextView
+        android:id="@+id/primaryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white" />
+	
+	<TextView
+        android:id="@+id/primaryAttr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/blue"
+        android:lineSpacingExtra="2dp" />
+	
+	<TextView
+        android:id="@+id/secondaryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white" />
+	
+	<TextView
+        android:id="@+id/secondaryAttr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/blue"
+        android:lineSpacingExtra="3dp" />
+	
+	<TextView
+        android:id="@+id/passiveAttr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/orange"
+        android:lineSpacingExtra="3dp" />
+
+</LinearLayout>
+    

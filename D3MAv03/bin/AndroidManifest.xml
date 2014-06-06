@@ -36,6 +36,7 @@
         </activity>
         <activity
             android:name="fouxx.D3MobileArmory.HeroDetailsActivity"
+            android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_hero_details" >
         </activity>
     </application>

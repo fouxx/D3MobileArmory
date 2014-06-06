@@ -16,6 +16,5 @@
     <string name="placeholder_level">lvl</string>
     <string name="description">Hero portrait</string>
     <string name="title_activity_hero_details">HeroDetailsActivity</string>
-    <string name="hello_world">Hello world!</string>
-
+    
 </resources>
