@@ -2,28 +2,20 @@ package fouxx.D3MobileArmory;
 
 import java.io.File;
 
+import android.app.ActionBar.LayoutParams;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager.LayoutParams;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Item {
 	String slot;
@@ -86,42 +78,46 @@ public class Item {
 	@Override
 	public String toString(){
 		//FIXME!
-		return DPS;		
+		return name;		
 	}
 	
 	OnClickListener getOnClickListener(final Context context){
 		return new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View arg0) {
 				//TODO
-				final TestDialog dialog = new TestDialog(context);
+				final Dialog dialog = new Dialog(context, R.style.customItemDialog);
 				//dialog.setContentView(R.layout.item_details_dialog);
 				LayoutInflater inflater = dialog.getLayoutInflater();
 		        View layout = inflater.inflate(R.layout.item_details_dialog, null);
+		        layout.setFocusable(true);
+		        layout.setFocusableInTouchMode(true);
 		        dialog.setContentView(layout);
-
+		        
 				//dialog.getWindow().getAttributes().width = LayoutParams.MATCH_PARENT;
 				//dialog.getWindow().getAttributes().height = LayoutParams.MATCH_PARENT;
 				
 				int x = context.getResources().getDisplayMetrics().widthPixels;
 				int y = context.getResources().getDisplayMetrics().heightPixels;
-				dialog.getWindow().setLayout(x-10, y-40);
+				dialog.getWindow().setLayout(x-10, LayoutParams.WRAP_CONTENT);//y-40);
 				
 				TextView title = (TextView) dialog.findViewById(android.R.id.title);
 				Drawable drawable = context.getResources().getDrawable(context.getResources().getIdentifier(color+"_title" , "drawable", context.getPackageName()));
 				title.setBackgroundDrawable(drawable);
 				title.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
 				title.setTextColor(context.getResources().getColor(context.getResources().getIdentifier(color , "color", context.getPackageName())));
+				title.setSingleLine(false);
 				title.setText(name);
 				
-				/*
-		        layout.setOnClickListener(new View.OnClickListener(){
+				LinearLayout ll = (LinearLayout) dialog.findViewById(R.id.ll);
+				
+				ll.setOnClickListener(new View.OnClickListener(){
 		             @Override
 		             public void onClick(View v){
 		                 dialog.dismiss();
 		             }
 		        });
-		        */
 				
 				ImageView itemIcon = (ImageView) layout.findViewById(R.id.itemIcon);
 				File storagePath = Environment.getExternalStorageDirectory();
@@ -132,10 +128,9 @@ public class Item {
 		        	itemIcon.requestLayout();
 		        	itemIcon.getLayoutParams().width = 82;
 		        	itemIcon.getLayoutParams().height = 82;
-		        	//itemIcon.setScaleType(ScaleType.CENTER);
 		        }
 		        itemIcon.setImageBitmap(bitmap);
-			  	Drawable bg = context.getResources().getDrawable(context.getResources().getIdentifier("item_"+color , "drawable", context.getPackageName()));
+			  	Drawable bg = context.getResources().getDrawable(context.getResources().getIdentifier("item_"+color+"_no_click" , "drawable", context.getPackageName()));
 			  	itemIcon.setBackgroundDrawable(bg);
 			  	
 			  	TextView itemType = (TextView) layout.findViewById(R.id.itemType);
@@ -152,22 +147,30 @@ public class Item {
 			  	if(!armor.equals("")){
 			  		armorOrDps.setText(armor);
 			  		armorOrDpsDesc.setText("Armor");
-			  	}
-			  	if(!DPS.equals("")){
+			  	}else if(!DPS.equals("")){
 			  		armorOrDps.setText(DPS);
 			  		armorOrDpsDesc.setText("Damage Per Second");
 			  		
-			  		damageOrBlock.setText(damage);
-			  		damageOrBlockDesc.setText(" Damage");
-			  		
 			  		attackSpeed.setText(Item.this.attackSpeed);
 			  		attackSpeedDesc.setText(" Attacks Per Second");
+			  	}else{
+			  		armorOrDps.setVisibility(View.GONE);
+			  		armorOrDpsDesc.setVisibility(View.GONE);
+			  		
+			  		attackSpeed.setVisibility(View.GONE);
+			  		attackSpeedDesc.setVisibility(View.GONE);
 			  	}
+			  	
 			  	if(!blockChance.equals("")){
 			  		damageOrBlock.setText(blockChance);
 			  		damageOrBlockDesc.setText(" Chance To Block");
+			  	}else if(!DPS.equals("")){
+			  		damageOrBlock.setText(damage);
+			  		damageOrBlockDesc.setText(" Damage");
+			  	}else{			  	
+			  		damageOrBlock.setVisibility(View.GONE);
+			  		damageOrBlockDesc.setVisibility(View.GONE);
 			  	}
-			  	
 			  	TextView primaryName = (TextView) layout.findViewById(R.id.primaryName);
 			  	TextView primaryAttr = (TextView) layout.findViewById(R.id.primaryAttr);
 			  	TextView secondaryName = (TextView) layout.findViewById(R.id.secondaryName);
@@ -177,18 +180,36 @@ public class Item {
 			  	if(!primaryAtr.equals("")){
 			  		primaryName.setText("Primary");
 			  		primaryAttr.setText(primaryAtr.substring(0, primaryAtr.length() - 1));
+			  	}else{
+			  		primaryName.setVisibility(View.GONE);
+			  		primaryAttr.setVisibility(View.GONE);
 			  	}
 			  	if(!secondaryAtr.equals("")){
 			  		secondaryName.setText("Secondary");
 			  		secondaryAttr.setText(secondaryAtr.substring(0, secondaryAtr.length() - 1));
+			  	}else{
+			  		secondaryName.setVisibility(View.GONE);
+			  		secondaryAttr.setVisibility(View.GONE);
 			  	}
 			  	
 			  	if(!passive.equals("")){
-			  		passiveAttr.setText(passive);
-			  	}
+			  		passiveAttr.setText(passive.substring(0, passive.length() - 1));
+			  	}else
+			  		passiveAttr.setVisibility(View.GONE);
+			  	
+		  		TextView requiredLvl = (TextView) dialog.findViewById(R.id.requiredLvl);
+		  		requiredLvl.setText("Required level: "+level);
+		  		
+		  		TextView flavorTxt = (TextView) dialog.findViewById(R.id.flavorText);
+			  	
+			  	if(!flavorText.equals("")){
+			  		View line = (View) dialog.findViewById(R.id.lineSeparator);
+			  		line.setVisibility(View.VISIBLE);
+			  		flavorTxt.setText(flavorText);
+			  	}else
+			  		flavorTxt.setVisibility(View.GONE);
 			  		
-				dialog.show();		
-				
+				dialog.show();
 			}
 		};
 	}

@@ -14,9 +14,14 @@
         <EditText
 	        android:id="@+id/btag"
 	        android:inputType="text"
+			android:digits="0123456789qwertzuiopasdfghjklyxcvbnm" 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.5"
+	        android:maxLength="12"
+	        android:maxLines="1"
+	        android:scrollHorizontally="true"
+	        android:singleLine="true"
 	        
             android:background="@drawable/edittext"
             android:textColor="#ffffff"

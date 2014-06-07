@@ -1,6 +1,5 @@
 package fouxx.D3MobileArmory;
 
-
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;

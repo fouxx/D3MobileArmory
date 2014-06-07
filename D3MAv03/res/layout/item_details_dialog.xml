@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:scrollbars="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/scrollView1"
+	android:fillViewport="true"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" >
+	
+<LinearLayout 
     android:orientation="vertical"
+	android:id="@+id/ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 	android:padding="5dp" >
-        
+	
 	<RelativeLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content" >
@@ -124,6 +129,33 @@
         android:layout_marginLeft="10dp"
         android:textColor="@color/orange"
         android:lineSpacingExtra="3dp" />
+	
+	<TextView
+        android:id="@+id/requiredLvl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white" />
+	
+	<View
+	    android:id="@+id/lineSeparator"
+	    android:layout_width="fill_parent"
+	    android:layout_marginTop="10dp"
+	    android:layout_height="2dp"
+	    android:visibility="invisible"
+	    android:background="#322A20"/>
+	
+	<TextView
+        android:id="@+id/flavorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="italic"
+        android:textColor="#AD835A"
+        android:gravity="center"
+        android:lineSpacingExtra="3dp" />
 
 </LinearLayout>
+</ScrollView>
+        
     
