@@ -34,6 +34,16 @@ public class Hero implements Serializable{
 		this.downloaded = downloaded;
 		this.btag = btag;
 		this.paragon = paragon;
+		
+		this.damage = "";
+		this.toughness = "";
+		this.healing = "";
+		this.a_str = "";
+		this.a_dex = "";
+		this.a_int = "";
+		this.a_vit = "";
+		this.life = "";
+		this.resource = "";
 	}
 	
 	void setDetails(String damage, String toughness, String healing, String a_str, String a_dex, String a_int, String a_vit){

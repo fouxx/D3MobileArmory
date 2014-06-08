@@ -3,14 +3,199 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ff8400" >
-     
-    <TextView android:layout_width="fill_parent"
+    android:padding="10dp"
+    android:background="#13120E" >
+
+    <TextView
+        android:id="@+id/attributesName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Stats"
-        android:textSize="20dp"
-        android:layout_centerInParent="true"/>
-     
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/attr"
+        android:textSize="24sp"
+        android:text="ATTRIBUTES" />
+    
+    <View
+	    android:id="@+id/lineSeparator"
+	    android:layout_width="fill_parent"
+	    android:layout_below="@id/attributesName"
+	    android:layout_marginTop="10dp"
+	    android:layout_height="2dp"
+	    android:background="#322A20"/>
+
+    <TextView
+        android:id="@+id/strName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/lineSeparator"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/attr_name"
+        android:text="Strength" />
+
+    <TextView
+        android:id="@+id/strValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/strName"
+        android:layout_alignBottom="@+id/strName"
+        android:layout_alignRight="@+id/lineSeparator"
+        android:textSize="16sp"
+        android:textColor="@color/attr" />
+    
+     <TextView
+        android:id="@+id/dexName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/strName"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/attr_name"
+        android:text="Dexterity" />
+
+    <TextView
+        android:id="@+id/dexValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/dexName"
+        android:layout_alignBottom="@+id/dexName"
+        android:layout_alignRight="@+id/lineSeparator"
+        android:textSize="16sp"
+        android:textColor="@color/attr" />
+    
+    <TextView
+        android:id="@+id/intName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/dexName"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/attr_name"
+        android:text="Intelligence" />
+
+    <TextView
+        android:id="@+id/intValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/intName"
+        android:layout_alignBottom="@+id/intName"
+        android:layout_alignRight="@+id/lineSeparator"
+        android:textSize="16sp"
+        android:textColor="@color/attr" />
+    
+    <TextView
+        android:id="@+id/vitName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/intName"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/attr_name"
+        android:text="Vitality" />
+
+    <TextView
+        android:id="@+id/vitValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/vitName"
+        android:layout_alignBottom="@+id/vitName"
+        android:layout_alignRight="@+id/lineSeparator"
+        android:textSize="16sp"
+        android:textColor="@color/attr" />
+    
+    <View
+        android:id="@+id/lineSeparatorThin"
+	    android:layout_width="fill_parent"
+	    android:layout_below="@id/vitName"
+	    android:layout_marginTop="10dp"
+	    android:layout_height="1dp"
+	    android:background="#322A20"/>
+    
+    <TextView
+        android:id="@+id/damageName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/lineSeparatorThin"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/attr_name"
+        android:text="Damage" />
+
+    <TextView
+        android:id="@+id/damageValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/damageName"
+        android:layout_alignBottom="@+id/damageName"
+        android:layout_alignRight="@+id/lineSeparator"
+        android:textSize="16sp"
+        android:textColor="@color/attr" />
+    
+    <TextView
+        android:id="@+id/toughnessName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/damageName"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/attr_name"
+        android:text="Tougness" />
+
+    <TextView
+        android:id="@+id/toughnessValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/toughnessName"
+        android:layout_alignBottom="@+id/toughnessName"
+        android:layout_alignRight="@+id/lineSeparator"
+        android:textSize="16sp"
+        android:textColor="@color/attr" />
+    
+    <TextView
+        android:id="@+id/healingName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/toughnessName"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/attr_name"
+        android:text="Healing" />
+
+    <TextView
+        android:id="@+id/healingValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/healingName"
+        android:layout_alignBottom="@+id/healingName"
+        android:layout_alignRight="@+id/lineSeparator"
+        android:textSize="16sp"
+        android:textColor="@color/attr" />
+    
+    <View
+        android:id="@+id/lineSeparatorThin2"
+	    android:layout_width="fill_parent"
+	    android:layout_below="@id/healingName"
+	    android:layout_marginTop="10dp"
+	    android:layout_height="1dp"
+	    android:background="#322A20"/>
+    
+    <TextView
+        android:id="@+id/lifeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lineSeparator"
+        android:layout_below="@+id/lineSeparatorThin2"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:textSize="12sp"
+        android:textColor="@color/attr_name" />
  
 </RelativeLayout>

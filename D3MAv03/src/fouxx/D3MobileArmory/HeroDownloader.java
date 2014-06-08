@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -99,7 +100,8 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 	protected Void doInBackground(String... urls) {
 		String heroUrl = urls[0];	
 		String hero = getSource(heroUrl);
-		String heroID = urls[1];
+		String btag = urls[1];
+		String heroID = urls[2];
 		
 		try {
 			JSONObject details = new JSONObject(hero);
@@ -202,7 +204,43 @@ public class HeroDownloader extends AsyncTask<String, Void, Void>{
 	    				itemPrimary, itemSecondary, itemPassive);
 	    		database.addItem(new_item);
 	    		// TODO Gems!
-			}			
+			}
+			String url = "http://eu.battle.net/d3/en/profile/"+btag+"/hero/"+heroID;
+			String stats = getSource(url);
+			
+			String attributes = StringUtils.substringBetween(stats, "attributes-core", "resources");
+			
+			String strength = StringUtils.substringBetween(attributes, "Strength", "</li>");
+			strength = StringUtils.substringBetween(strength, "value\">", "<");
+			
+			String dexterity = StringUtils.substringBetween(attributes, "Dexterity", "</li>");
+			dexterity = StringUtils.substringBetween(dexterity, "value\">", "<");
+			
+			String intelligence = StringUtils.substringBetween(attributes, "Intelligence", "</li>");
+			intelligence = StringUtils.substringBetween(intelligence, "value\">", "<");
+			
+			String vitality = StringUtils.substringBetween(attributes, "Vitality", "</li>");
+			vitality = StringUtils.substringBetween(vitality, "value\">", "<");
+			
+			String damage = StringUtils.substringBetween(attributes, "Damage", "</li>");
+			damage = StringUtils.substringBetween(damage, "value\">", "<");
+			
+			String toughness = StringUtils.substringBetween(attributes, "Toughness", "</li>");
+			toughness = StringUtils.substringBetween(toughness, "value\">", "<");
+			
+			String healing = StringUtils.substringBetween(attributes, "Healing", "</li>");
+			healing = StringUtils.substringBetween(healing, "value\">", "<");
+			
+			String life = details.getJSONObject("stats").getString("life");
+			String resource = details.getJSONObject("stats").getString("primaryResource");
+
+			String resource2 = details.getJSONObject("stats").getString("secondaryResource");
+			if(!resource2.equals("0"))
+				resource = resource+" "+resource2;
+			
+			
+			database.addHeroStats(heroID, strength, dexterity, intelligence, vitality,
+					damage, toughness, healing, life, resource);
 		} catch (JSONException e) {
             e.printStackTrace();
         }

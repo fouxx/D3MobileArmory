@@ -42,7 +42,9 @@
         </activity>
         <activity
             android:name="fouxx.D3MobileArmory.HeroTabsActivity"
-            android:label="@string/title_activity_hero_tabs" >
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_hero_tabs"
+            android:screenOrientation="nosensor" >
         </activity>
     </application>
 

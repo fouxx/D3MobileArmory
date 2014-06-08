@@ -31,7 +31,10 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         
         String CREATE_HERO_TABLE = "CREATE TABLE heroes ( " + 
         		"ID TEXT, name TEXT, gender TEXT, level TEXT, "+
-        		"heroClass TEXT, mode TEXT, downloaded TEXT, btag TEXT, paragon TEXT, PRIMARY KEY(ID) )";
+        		"heroClass TEXT, mode TEXT, downloaded TEXT, btag TEXT, paragon TEXT, "+
+        		"damage TEXT, toughness TEXT, healing TEXT, "+
+        		"a_str TEXT, a_dex TEXT, a_int TEXT, a_vit TEXT, "+
+        		"life TEXT, resource TEXT, PRIMARY KEY(ID) )";
         db.execSQL(CREATE_HERO_TABLE);
         
         String CREATE_ITEM_TABLE = "CREATE TABLE items ( " +
@@ -157,8 +160,21 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
     private static final String KEY_DOWNLOADED = "downloaded";
     private static final String KEY_PARAGON = "paragon";
     
+    private static final String KEY_HERO_DAMAGE = "damage";
+    private static final String KEY_TOUGHNESS = "toughness";
+    private static final String KEY_HEALING = "healing";
     
-    private static final String[] HERO_COLUMNS = {KEY_ID, KEY_NAME, KEY_GENDER, KEY_LEVEL, KEY_HEROCLASS, KEY_MODE, KEY_DOWNLOADED, KEY_BTAG, KEY_PARAGON};
+    private static final String KEY_A_STR = "a_str";
+    private static final String KEY_A_DEX = "a_dex";
+    private static final String KEY_A_INT = "a_int";
+    private static final String KEY_A_VIT = "a_vit";
+    
+    private static final String KEY_LIFE = "life";
+    private static final String KEY_RESOURCE = "resource";
+    
+    
+    private static final String[] HERO_COLUMNS = {KEY_ID, KEY_NAME, KEY_GENDER, KEY_LEVEL, KEY_HEROCLASS, KEY_MODE, KEY_DOWNLOADED, KEY_BTAG, KEY_PARAGON,
+    							KEY_HERO_DAMAGE, KEY_TOUGHNESS, KEY_HEALING, KEY_A_STR, KEY_A_DEX, KEY_A_INT, KEY_A_VIT, KEY_LIFE, KEY_RESOURCE};
     
     public void addHero(Hero hero){
         Log.d("addHero", hero.toString());
@@ -179,8 +195,64 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_DOWNLOADED, hero.downloaded);
         values.put(KEY_BTAG, hero.btag);
         values.put(KEY_PARAGON, hero.paragon);
+        
+        values.put(KEY_HERO_DAMAGE, "");
+        values.put(KEY_TOUGHNESS, "");
+        values.put(KEY_HEALING, "");
+
+        values.put(KEY_A_STR, "");
+        values.put(KEY_A_DEX, "");
+        values.put(KEY_A_INT, "");
+        values.put(KEY_A_VIT, "");
+
+        values.put(KEY_LIFE, "");
+        values.put(KEY_RESOURCE, "");
  
         db.insert(TABLE_HEROES, null, values);
+    }
+    
+    public Hero getHero(String heroID){
+        SQLiteDatabase db = this.getReadableDatabase();
+ 
+        Cursor cursor = 
+                db.query(TABLE_HEROES, // a. table
+                HERO_COLUMNS, // b. column names
+                " ID = ?", // c. selections 
+                new String[] { heroID }, // d. selections args
+                null, // e. group by
+                null, // f. having
+                null, // g. order by
+                null); // h. limit
+ 
+        if (cursor != null)
+            cursor.moveToFirst();
+        else
+        	return null;
+ 
+        Hero hero = new Hero();
+        hero.ID = cursor.getString(0);
+        hero.name = cursor.getString(1);
+        hero.gender = cursor.getString(2);
+        hero.level = cursor.getString(3);
+        hero.heroClass = cursor.getString(4);
+        hero.mode = cursor.getString(5);
+        hero.downloaded = cursor.getString(6);
+        hero.btag = cursor.getString(7);
+        hero.paragon = cursor.getString(8);
+
+        hero.damage = cursor.getString(9);
+        hero.toughness = cursor.getString(10);
+        hero.healing = cursor.getString(11);
+
+        hero.a_str = cursor.getString(12);
+        hero.a_dex = cursor.getString(13);
+        hero.a_int = cursor.getString(14);
+        hero.a_vit = cursor.getString(15);
+
+        hero.life = cursor.getString(16);
+        hero.resource = cursor.getString(17);
+
+        return hero;
     }
     
     public ArrayList<Hero> getAllPlayersHeroes(Player player) {
@@ -204,6 +276,18 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
                 hero.downloaded = cursor.getString(6);
                 hero.btag = cursor.getString(7);
                 hero.paragon = cursor.getString(8);
+
+                hero.damage = cursor.getString(9);
+                hero.toughness = cursor.getString(10);
+                hero.healing = cursor.getString(11);
+
+                hero.a_str = cursor.getString(12);
+                hero.a_dex = cursor.getString(13);
+                hero.a_int = cursor.getString(14);
+                hero.a_vit = cursor.getString(15);
+
+                hero.life = cursor.getString(16);
+                hero.resource = cursor.getString(17);
   
                 heroes.add(hero);
             } while (cursor.moveToNext());
@@ -232,8 +316,21 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
                 new String[] { heroID });
     }
     
-    public void addHeroStats(){
-    	//TODO Adding stats
+    public void addHeroStats(String heroID, String str, String dex, String intel, String vit, String dmg, String tgh, String heal, String life, String res){
+    	SQLiteDatabase db = this.getWritableDatabase();
+        
+        db.execSQL("UPDATE "+ TABLE_HEROES +
+                " SET " + KEY_HERO_DAMAGE + " = '" + dmg +
+                "', " + KEY_TOUGHNESS + " = '" + tgh +
+                "', " + KEY_HEALING + " = '" + heal +
+                "', " + KEY_A_STR + " = '" + str +
+                "', " + KEY_A_DEX + " = '" + dex +
+                "', " + KEY_A_INT + " = '" + intel +
+                "', " + KEY_A_VIT + " = '" + vit +
+                "', " + KEY_LIFE + " = '" + life +
+                "', " + KEY_RESOURCE + " = '" + res +
+                "' WHERE " + KEY_ID + " = ?",
+                new String[] { heroID });
     }
     
     ////////////////////////////////////////////////////////////////////////////////////

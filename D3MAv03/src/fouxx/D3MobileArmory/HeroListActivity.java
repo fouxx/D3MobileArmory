@@ -69,7 +69,7 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 						return;
 					}	
 					String heroProfile = "http://eu.battle.net/api/d3/profile/"+player.btag+"/hero/"+hero.ID;
-					new HeroDownloader(HeroListActivity.this, HeroListActivity.this).execute(heroProfile, hero.ID);
+					new HeroDownloader(HeroListActivity.this, HeroListActivity.this).execute(heroProfile, player.btag, hero.ID);
 				}else{
 					Intent i = new Intent(getApplicationContext(), HeroTabsActivity.class);
 		        	i.putExtra("HERO", hero);
