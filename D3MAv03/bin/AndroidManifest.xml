@@ -40,6 +40,10 @@
             android:label="@string/title_activity_hero_details"
             android:screenOrientation="nosensor" >
         </activity>
+        <activity
+            android:name="fouxx.D3MobileArmory.HeroTabsActivity"
+            android:label="@string/title_activity_hero_tabs" >
+        </activity>
     </application>
 
 </manifest>

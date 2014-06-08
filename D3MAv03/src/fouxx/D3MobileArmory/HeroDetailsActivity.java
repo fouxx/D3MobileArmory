@@ -13,8 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 
-public class HeroDetailsActivity extends ActionBarActivity {
-	
+public class HeroDetailsActivity extends ActionBarActivity{	
 	D3MobileArmorySQLiteHelper database;
 	List<Item> itemList;
 	

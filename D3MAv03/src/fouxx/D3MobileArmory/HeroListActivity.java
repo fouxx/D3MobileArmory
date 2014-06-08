@@ -62,6 +62,7 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
 				hero = list.get(position);
+				
 				if(!database.isGearDownloaded(hero.ID)){
 					if(!isNetworkStatusAvialable(getApplicationContext())){
 						new D3MAToast(HeroListActivity.this, "Unable to download content.\nCheck Internet connection.").show();
@@ -70,7 +71,7 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 					String heroProfile = "http://eu.battle.net/api/d3/profile/"+player.btag+"/hero/"+hero.ID;
 					new HeroDownloader(HeroListActivity.this, HeroListActivity.this).execute(heroProfile, hero.ID);
 				}else{
-		        	Intent i = new Intent(getApplicationContext(), HeroDetailsActivity.class);
+					Intent i = new Intent(getApplicationContext(), HeroTabsActivity.class);
 		        	i.putExtra("HERO", hero);
 		        	startActivity(i);
 				}
@@ -94,7 +95,7 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 	public void asyncComplete(boolean success) {
 		if(success){
 			database.setGearDownloaded(hero.ID);
-        	Intent i = new Intent(getApplicationContext(), HeroDetailsActivity.class);
+			Intent i = new Intent(getApplicationContext(), HeroTabsActivity.class);
         	i.putExtra("HERO", hero);
         	startActivity(i);
 			System.out.println("Hooray!");
