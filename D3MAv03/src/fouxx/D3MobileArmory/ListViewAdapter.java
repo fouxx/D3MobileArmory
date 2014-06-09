@@ -48,7 +48,7 @@ public class ListViewAdapter extends BaseAdapter {
 		  TextView heroLevel;
 		  TextView heroParagonLevel;
 		  TextView heroMode;
-		 }
+	}
 
 	@SuppressLint("DefaultLocale")
 	@Override

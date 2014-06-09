@@ -29,6 +29,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 
 public class MainActivity extends ActionBarActivity implements AsyncDelegate {
+	TextView title;
 	
 	Button addNewPlayer, add, cancel;
 	Typeface font;
@@ -38,9 +39,8 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 	
 	String Career, Heroes;
 	List<Player> list;
-	ArrayAdapter<Player> adapter;
-
-    String[] menuItems = {"DELETE", "UPDATE"};
+    
+    PlayerListViewAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +48,17 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 		setContentView(R.layout.activity_main);
 		getActionBar().hide();
 		
+		title = (TextView) findViewById(R.id.title);
+		title.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/DiabloLight.ttf"));
+		title.setText("D3 MOBILE ARMORY");
+		
 		db = new D3MobileArmorySQLiteHelper(this);
 		addNewPlayer = (Button) findViewById(R.id.addNewPlayer);
 		font = Typeface.createFromAsset(getAssets(),"fonts/DiabloLight.ttf");
 		addNewPlayer.setTypeface(font);
 
 		playerList = (ListView) findViewById(R.id.playerList);
-		list = db.getAllPlayers();
-		adapter = new ArrayAdapter<Player>(this, R.layout.custom_textview, list);
-		
-		playerList.setAdapter(adapter);
-		playerList.setTextFilterEnabled(true);
+		populateListView();
 		
 		playerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 		    @Override
@@ -94,21 +94,27 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
         			Player deletePlayer = list.get(pos);
         			db.deletePlayer(deletePlayer);
         			
-        			list = db.getAllPlayers();        		
-        			ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
-        			playerList.setAdapter(adapter);
-        			playerList.setTextFilterEnabled(true);
+        			populateListView();
         		}
+        		/*
         		if(item.getTitle().equals("Update")){
         			
 //					TODO Update
         			
         		}
+        		*/
         		return true;  
             }  
         });
         popup.show();
 	    return true;
+	}
+	
+	public void populateListView(){
+		list = db.getAllPlayers();        		
+		adapter = new PlayerListViewAdapter(getApplicationContext(), list);
+		playerList.setAdapter(adapter);
+		playerList.setTextFilterEnabled(true);
 	}
 	
 	public void onAddNewPlayerClick(View v){
@@ -144,10 +150,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 				
 				new ProfileDownloader(MainActivity.this, MainActivity.this).execute(url);
 				
-				list = db.getAllPlayers();        		
-    			adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
-    			playerList.setAdapter(adapter);
-    			playerList.setTextFilterEnabled(true);
+				populateListView();
     			
 				dialog.dismiss();	
 			}
@@ -175,10 +178,7 @@ public class MainActivity extends ActionBarActivity implements AsyncDelegate {
 	@Override
 	public void asyncComplete(boolean success) {
 		if(success){
-			list = db.getAllPlayers();        		
-			adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.custom_textview, list);
-			playerList.setAdapter(adapter);
-			playerList.setTextFilterEnabled(true);
+			populateListView();
 		}
 	}
 }

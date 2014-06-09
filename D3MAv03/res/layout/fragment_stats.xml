@@ -3,15 +3,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:background="#13120E" >
 
+	<TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:textColor="#ffead4"
+        android:textSize="36sp"
+        android:text="TextView" />
+	
+	<LinearLayout
+	    android:id="@+id/lvlClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+	    android:layout_centerHorizontal="true"
+	    android:orientation="horizontal"
+        android:layout_marginRight="22dp" >
+        
+		<TextView
+	        android:id="@+id/heroLevel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:textSize="16sp"
+	        android:textColor="@color/text_color"
+	        android:text="@string/placeholder_level" />
+	    
+	    <TextView
+	        android:id="@+id/heroParagonLevel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="3dp"
+	        android:textSize="16sp"
+	        android:textColor="#7287BE"
+	        android:text="@string/placeholder_level" />
+	    
+	    <TextView
+	        android:id="@+id/heroClass"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="3dp"
+	        android:textSize="16sp"
+	        android:textColor="@color/text_color"
+	        android:text="@string/placeholder_class" />
+    </LinearLayout>
+    
+	<TextView
+        android:id="@+id/heroMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lvlClass"
+        android:textSize="16sp"
+        android:textColor="#FF0000" />
+	
     <TextView
         android:id="@+id/attributesName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/heroMode"
+        android:layout_marginTop="15dp"
         android:textColor="@color/attr"
         android:textSize="24sp"
         android:text="ATTRIBUTES" />

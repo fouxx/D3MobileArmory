@@ -14,7 +14,7 @@
         <EditText
 	        android:id="@+id/btag"
 	        android:inputType="text"
-			android:digits="0123456789qwertzuiopasdfghjklyxcvbnm" 
+			android:digits="0123456789qwertzuiopasdfghjklyxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM" 
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.5"

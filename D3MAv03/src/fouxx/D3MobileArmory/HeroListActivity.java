@@ -54,7 +54,6 @@ public class HeroListActivity extends ActionBarActivity implements AsyncDelegate
 		adapter = new ListViewAdapter(getApplicationContext(), list);
         heroList.setAdapter(adapter);
 		
-		heroList.setAdapter(adapter);
 		heroList.setTextFilterEnabled(true);
 		
 		heroList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

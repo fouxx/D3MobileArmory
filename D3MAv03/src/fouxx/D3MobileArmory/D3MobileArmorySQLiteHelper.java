@@ -100,7 +100,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
  
         Player player = new Player(cursor.getString(0), cursor.getString(1), cursor.getString(2));
         Log.d("getPlayer("+btag+")", player.toString());
-
+        db.close();
         return player;
     }
     
@@ -117,8 +117,10 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
                 players.add(new Player(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
             } while (cursor.moveToNext());
         }
-  
+        
+
         Log.d("getAllPlayers()", players.toString());
+        db.close();
         return players;
     }
     
@@ -142,8 +144,9 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         db.delete(TABLE_HEROES, KEY_BTAG+" = ?", 
         		new String[] { player.btag });
  
-        db.close();
+
         Log.d("deletePlayer", player.toString());
+        db.close();
     }
     
     ////////////////////////////////////////////////////////////////////////////////////
@@ -209,6 +212,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_RESOURCE, "");
  
         db.insert(TABLE_HEROES, null, values);
+        db.close();
     }
     
     public Hero getHero(String heroID){
@@ -252,6 +256,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         hero.life = cursor.getString(16);
         hero.resource = cursor.getString(17);
 
+        db.close();
         return hero;
     }
     
@@ -260,7 +265,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
   
         String query = "SELECT  * FROM " + TABLE_HEROES + " WHERE " + KEY_BTAG + " = '" + player.btag + "'";
   
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
   
         Hero hero = null;
@@ -294,6 +299,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         }
   
         Log.d("getAllPlayersHeroes()", heroes.toString());
+        db.close();
         return heroes;
     }
     
@@ -331,6 +337,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
                 "', " + KEY_RESOURCE + " = '" + res +
                 "' WHERE " + KEY_ID + " = ?",
                 new String[] { heroID });
+        db.close();
     }
     
     ////////////////////////////////////////////////////////////////////////////////////
@@ -396,6 +403,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         values.put(KEY_PASSIVE, item.passive);
  
         db.insert(TABLE_ITEMS, null, values);
+        db.close();
     }
     
     public List<Item> getAllHerosItems(Hero hero) {
@@ -434,6 +442,7 @@ public class D3MobileArmorySQLiteHelper extends SQLiteOpenHelper{
         }
   
         Log.d("getAllPlayersHeroes()", items.toString());
+        db.close();
         return items;
     }
 }

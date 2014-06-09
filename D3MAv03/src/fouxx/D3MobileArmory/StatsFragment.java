@@ -2,6 +2,8 @@ package fouxx.D3MobileArmory;
 
 import java.text.DecimalFormat;
 
+import org.apache.commons.lang3.StringUtils;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,10 +30,36 @@ public class StatsFragment extends Fragment {
 		
 		df = new DecimalFormat("###,###,###");
 		
+		TextView name = (TextView) rootView.findViewById(R.id.name);	  	
+
+	  	TextView heroClass = (TextView) rootView.findViewById(R.id.heroClass);
+		TextView heroLevel = (TextView) rootView.findViewById(R.id.heroLevel);
+		TextView heroParagonLevel = (TextView) rootView.findViewById(R.id.heroParagonLevel);
+		TextView heroMode = (TextView) rootView.findViewById(R.id.heroMode);
+		
+	  	name.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),"fonts/DiabloLight.ttf"));
+	  	name.setText(hero.name.toUpperCase());
+	  	
+	  	String c = hero.heroClass;
+	  	c = hero.heroClass;
+	  	if(c.contains("-"))
+	  		c = c.replace("-", " ");
+	  	c = StringUtils.capitalize(c);
+	  	
+		heroLevel.setText(hero.level);
+	  	heroParagonLevel.setText("("+hero.paragon+")");
+	  	if(hero.paragon.equals("0"))
+	  		heroParagonLevel.setVisibility(View.GONE);
+	  	heroClass.setText(c);
+	  	if(!hero.mode.equals(""))
+	  		heroMode.setText(hero.mode);
+	  	else
+	  		heroMode.setVisibility(View.GONE);
+		
 		TextView attributesName = (TextView) rootView.findViewById(R.id.attributesName);
 		attributesName.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),"fonts/DiabloLight.ttf"));
 		attributesName.setText("ATTRIBUTES");
-		
+			
 		TextView strValue = (TextView) rootView.findViewById(R.id.strValue);
 		double str = Double.parseDouble(hero.a_str);
 		strValue.setText(df.format(str));
